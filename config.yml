@@ -1,0 +1,14 @@
+folders:
+  # Location: The location of the folder you want to scan
+  # Age: Any files in the folder that are older than the specified amount of days will be deleted
+
+  # Important: Remember to change any '\' to '/' or there will be errors
+  # Note: The plugin developer is not responsible for any accidentally deleted files - take backups regularly
+
+  # You can add as many folders as you'd like
+  folder-1:
+    #location: "/home/container/logs"
+    age: 60
+  folder-2:
+    #location: "/home/container/plugins/Skript/backups"
+    age: 30
