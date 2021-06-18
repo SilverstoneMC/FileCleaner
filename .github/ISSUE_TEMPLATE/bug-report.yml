@@ -11,8 +11,8 @@ body:
 
 - type: input
   attributes:
-    label: Link to latest.log file with print-stack-traces enabled
-    description: "Reproduce your problem with `print-stack-traces` set to true in the EntityClearer config, then upload your `/logs/latest.log` file to https://paste.gg/, click \"Submit anonymously\", and paste the URL below"
+    label: Link to latest.log file
+    description: "Reproduce your problem, upload your `/logs/latest.log` file to https://paste.gg/, click \"Submit anonymously\", and paste the URL below"
   validations:
     required: true
 
@@ -38,14 +38,14 @@ body:
 
 - type: textarea
   attributes:
-    label: Output of `/version EntityClearer`
+    label: Output of `/version FileCleaner`
     description: "Upload a screenshot or copy the text from the message"
   validations:
     required: true
 
 - type: textarea
   attributes:
-    label: EntityClearer config.yml
+    label: FileCleaner config.yml
     description: "Please copy and paste your config.yml to the text box below"
     render: yaml
   validations:
