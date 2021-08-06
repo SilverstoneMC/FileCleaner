@@ -1,4 +1,4 @@
-main: me.jasonhorkles.filecleanerspigot.fcspigot
+main: me.jasonhorkles.filecleanerspigot.FCSpigot
 name: FileCleaner
 description: Clean your old files!
 version: s1.0.0
