@@ -1,7 +1,7 @@
-package me.JasonHorkles.FileCleanerSpigot;
+package me.jasonhorkles.filecleanerspigot;
 
 import com.sun.istack.internal.NotNull;
-import me.JasonHorkles.FileCleaner.CleanFiles;
+import me.jasonhorkles.filecleaner.CleanFiles;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

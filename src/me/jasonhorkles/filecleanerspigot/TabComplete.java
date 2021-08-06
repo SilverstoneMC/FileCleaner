@@ -1,4 +1,4 @@
-package me.JasonHorkles.FileCleanerSpigot;
+package me.jasonhorkles.filecleanerspigot;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;

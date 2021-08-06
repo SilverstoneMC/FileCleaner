@@ -1,6 +1,6 @@
-package me.JasonHorkles.FileCleanerBungee;
+package me.jasonhorkles.filecleanerbungee;
 
-import me.JasonHorkles.FileCleaner.CleanFiles;
+import me.jasonhorkles.filecleaner.CleanFiles;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.TextComponent;

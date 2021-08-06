@@ -1,4 +1,4 @@
-package me.JasonHorkles.FileCleaner;
+package me.jasonhorkles.filecleaner;
 
 import net.md_5.bungee.api.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
