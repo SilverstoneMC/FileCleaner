@@ -1,0 +1,26 @@
+main: me.JasonHorkles.FileCleanerSpigot.FCSpigot
+name: FileCleaner
+description: Clean your old files!
+version: s1.0.0
+author: JasonHorkles
+website: https://github.com/SilverstoneMC/FileCleaner
+api-version: 1.13
+
+commands:
+  filecleaner:
+    description: "Base command for the FileCleaner plugin"
+    usage: "§cUsage: /filecleaner <reload | cleannow>"
+    aliases:
+      - fc
+    permission: filecleaner.command
+
+permissions:
+  filecleaner.command:
+    description: Permisison to see the base command
+    default: op
+  filecleaner.reload:
+    description: Reloads the plugin
+    default: op
+  filecleaner.cleannow:
+    description: Force the files to be scanned and cleaned up now
+    default: op
