@@ -1,6 +1,5 @@
 package me.jasonhorkles.filecleanerspigot;
 
-import com.sun.istack.internal.NotNull;
 import me.jasonhorkles.filecleaner.CleanFiles;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -27,7 +26,7 @@ public class FCSpigot extends JavaPlugin {
         cleanFiles();
     }
 
-    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
+    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         switch (args[0].toLowerCase()) {
             case "reload":
                 saveDefaultConfig();
@@ -52,8 +51,9 @@ public class FCSpigot extends JavaPlugin {
 
             if (file == null) continue;
 
-            int days = instance.getConfig().getInt("folders." + folders + ".age");
-            CleanFiles.CleanFilesTask(file, instance, null, days);
+            int age = instance.getConfig().getInt("folders." + folders + ".age");
+            int count = instance.getConfig().getInt("folders." + folders + ".count");
+            new CleanFiles().CleanFilesTask(file, instance, null, age, count);
         }
         instance.getLogger().info("Done!");
     }

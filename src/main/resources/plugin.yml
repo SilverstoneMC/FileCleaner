@@ -1,7 +1,7 @@
 main: me.jasonhorkles.filecleanerspigot.FCSpigot
 name: FileCleaner
 description: Clean your old files!
-version: s1.0.0
+version: s%VERSION%
 author: JasonHorkles
 website: https://github.com/SilverstoneMC/FileCleaner
 api-version: 1.13

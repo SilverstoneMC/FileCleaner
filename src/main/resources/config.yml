@@ -1,0 +1,22 @@
+folders:
+  # Location: The location of the folder you want to scan - remember to remove the # before it for the option to work
+  # Age: Any files in the folder that are older than the specified amount of days will be deleted (can be used alone or with the "count" option)
+  # Count: If the folder has more than this many files, it will delete any extras starting from the oldest (can be used alone or with the "age" option)
+  # Set "age" or "count" to -1 to disable it
+
+  # Important: Remember to change any '\' to '/' or there will be errors
+  # Note: The plugin developer is not responsible for any accidentally deleted files - take backups regularly
+
+  # You can add as many folders as you'd like
+  1: # <- This can be whatever you want, just make sure it's unique
+    #location: "/home/container/logs"
+    age: 30
+    count: 45
+  2:
+    #location: "/home/container/plugins/Skript/backups"
+    age: -1
+    count: 15
+  3:
+    #location: "/home/container/plugins/mcMMO/backup"
+    age: 60
+    count: -1
