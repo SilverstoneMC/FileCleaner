@@ -1,4 +1,4 @@
-main: me.JasonHorkles.FileCleanerBungee.FCBungee
+main: me.jasonhorkles.filecleanerbungee.FCBungee
 name: FileCleaner
 version: b%VERSION%
 author: JasonHorkles
