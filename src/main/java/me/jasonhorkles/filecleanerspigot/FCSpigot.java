@@ -13,7 +13,7 @@ public class FCSpigot extends JavaPlugin {
     public void onEnable() {
         instance = this;
 
-        getCommand("filecleaner").setExecutor(new Commands());
+        getCommand("filecleaner").setExecutor(new Commands(this, instance));
         getCommand("filecleaner").setTabCompleter(new TabComplete());
 
         saveDefaultConfig();

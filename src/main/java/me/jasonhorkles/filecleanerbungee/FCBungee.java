@@ -27,7 +27,7 @@ public class FCBungee extends Plugin implements Listener {
 
         getLogger().info("Plugin location: \"" + instance.getFile().getAbsolutePath() + "\"");
 
-        getProxy().getPluginManager().registerCommand(this, new Commands());
+        getProxy().getPluginManager().registerCommand(this, new Commands(instance));
 
         cleanFiles();
     }

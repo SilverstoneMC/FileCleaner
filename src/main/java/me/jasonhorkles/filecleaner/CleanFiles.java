@@ -52,9 +52,11 @@ public class CleanFiles {
             }
         } else {
             if (sPlugin == null) {
-                bPlugin.getLogger().severe("Couldn't delete file \"" + file.getPath() + "\" - make sure it's not currently in use!");
+                bPlugin.getLogger()
+                        .severe("Couldn't delete file \"" + file.getPath() + "\" - make sure it's not currently in use!");
             } else {
-                sPlugin.getLogger().severe("Couldn't delete file \"" + file.getPath() + "\" - make sure it's not currently in use!");
+                sPlugin.getLogger()
+                        .severe("Couldn't delete file \"" + file.getPath() + "\" - make sure it's not currently in use!");
             }
         }
     }

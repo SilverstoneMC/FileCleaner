@@ -12,9 +12,13 @@ import java.util.List;
 
 public class Commands extends Command implements TabExecutor {
 
-    public Commands() {
+    private final FCBungee instance;
+
+    public Commands(FCBungee instance) {
         super("filecleanerbungee", "filecleaner.command", "fcb");
+        this.instance = instance;
     }
+
 
     public void execute(CommandSender sender, String[] args) {
         if (args.length == 0) {
@@ -23,13 +27,13 @@ public class Commands extends Command implements TabExecutor {
         }
 
         if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("filecleaner.reload")) {
-            new FCBungee().loadConfig();
+            instance.loadConfig();
             sender.sendMessage(new TextComponent(ChatColor.GREEN + "FileCleaner reloaded!"));
 
         } else if (args[0].equalsIgnoreCase("cleannow") && sender.hasPermission("filecleaner.cleannow")) {
             if (sender instanceof ProxiedPlayer)
                 sender.sendMessage(new TextComponent(ChatColor.DARK_GREEN + "Cleaning files! Check console for more information."));
-            new FCBungee().cleanFiles();
+            instance.cleanFiles();
 
         } else {
             sender.sendMessage(TextComponent.fromLegacyText(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
