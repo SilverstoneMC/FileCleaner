@@ -67,7 +67,8 @@ public class FCBungee extends Plugin implements Listener {
 
             int age = config.getInt("folders." + folders + ".age");
             int count = config.getInt("folders." + folders + ".count");
-            new CleanFiles().CleanFilesTask(folder, null, instance, age, count);
+            long size = config.getLong("folders." + folders + ".size");
+            new CleanFiles().CleanFilesTask(folder, null, instance, age, count, size);
         }
         instance.getLogger().info("Done!");
     }

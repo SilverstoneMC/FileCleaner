@@ -33,7 +33,8 @@ public class FCSpigot extends JavaPlugin {
 
             int age = instance.getConfig().getInt("folders." + folders + ".age");
             int count = instance.getConfig().getInt("folders." + folders + ".count");
-            new CleanFiles().CleanFilesTask(folder, instance, null, age, count);
+            long size = instance.getConfig().getLong("folders." + folders + ".size");
+            new CleanFiles().CleanFilesTask(folder, instance, null, age, count, size);
         }
         instance.getLogger().info("Done!");
     }

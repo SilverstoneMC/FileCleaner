@@ -10,12 +10,14 @@ import java.util.Date;
 
 public class CleanFiles {
 
-    public void CleanFilesTask(String folderName, JavaPlugin sPlugin, Plugin bPlugin, int age, int count) {
+    public void CleanFilesTask(String folderName, JavaPlugin sPlugin, Plugin bPlugin, int age, int count, long size) {
         File folder = new File(folderName);
         try {
+            File[] files = folder.listFiles();
+
             if (age > -1) {
                 //noinspection ConstantConditions
-                for (File file : folder.listFiles()) {
+                for (File file : files) {
                     long diff = new Date().getTime() - file.lastModified();
 
                     if (diff > (long) age * 24 * 60 * 60 * 1000) {
@@ -25,11 +27,20 @@ public class CleanFiles {
             }
 
             if (count > -1) {
-                File[] files = folder.listFiles();
                 //noinspection ConstantConditions
                 Arrays.sort(files, Comparator.comparingLong(File::lastModified));
                 for (int x = 0; x < files.length - count; x++) {
                     deleteFile(sPlugin, bPlugin, files[x]);
+                }
+            }
+
+            if (size > -1) {
+                //noinspection ConstantConditions
+                Arrays.sort(files, Comparator.comparingLong(File::length));
+                for (File file : files) {
+                    if (Math.round(file.length() / 1024.0) > (double) size) {
+                        deleteFile(sPlugin, bPlugin, file);
+                    }
                 }
             }
         } catch (NullPointerException e) {
