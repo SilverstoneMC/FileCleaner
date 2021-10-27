@@ -35,9 +35,8 @@ public class Commands extends Command implements TabExecutor {
                 sender.sendMessage(new TextComponent(ChatColor.DARK_GREEN + "Cleaning files! Check console for more information."));
             instance.cleanFiles();
 
-        } else {
-            sender.sendMessage(TextComponent.fromLegacyText(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
-        }
+        } else sender.sendMessage(
+            TextComponent.fromLegacyText(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
     }
 
 
@@ -46,27 +45,18 @@ public class Commands extends Command implements TabExecutor {
     @Override
     public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
         if (sender.hasPermission("filecleaner.reload")) {
-            if (!arguments.contains("reload")) {
-                arguments.add("reload");
-            }
-        } else {
-            arguments.remove("reload");
-        }
+            if (!arguments.contains("reload")) arguments.add("reload");
+        } else arguments.remove("reload");
 
         if (sender.hasPermission("filecleaner.cleannow")) {
-            if (!arguments.contains("cleannow")) {
-                arguments.add("cleannow");
-            }
-        } else {
-            arguments.remove("cleannow");
-        }
+            if (!arguments.contains("cleannow")) arguments.add("cleannow");
+        } else arguments.remove("cleannow");
 
         List<String> result = new ArrayList<>();
         if (args.length == 1) {
-            for (String a : arguments) {
+            for (String a : arguments)
                 if (a.toLowerCase().startsWith(args[0].toLowerCase()))
                     result.add(a);
-            }
             return result;
         }
         return new ArrayList<>();
