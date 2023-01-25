@@ -1,5 +1,5 @@
 folders:
-  # Location: The location of the folder you want to scan - remember to remove the # before it for the option to work
+  # Location: The location of the folder you want to scan, relative to the server's root directory - remember to remove the # before it for the option to work
 
   # ----- THE FOLLOWING OPTIONS CAN EITHER BE USED ALONE OR TOGETHER WITH THE OTHERS IN THIS SECTION ----- #
   #
@@ -12,21 +12,21 @@ folders:
   # Set "age", "count", or "size" to -1 to disable that check
 
   # Important: Remember to change any '\' to '/' or there will be errors
-  # Note: The plugin developer is not responsible for any accidentally deleted files - take backups regularly
+  # Note: The plugin developer is not responsible for any accidentally deleted files - take backups regularly!
 
   # You can add as many folders as you'd like
-  1: # <- This can be whatever you want, just make sure it's unique
-    #location: "/home/container/logs"
+  1: # <- This can be whatever you want; just make sure it's unique
+    #location: "/logs"
     age: 30
     count: 45
-    size: 100
+    size: 500
   2:
-    #location: "/home/container/plugins/Skript/backups"
+    #location: "/plugins/Skript/backups"
     age: -1
-    count: 15
+    count: 10
     size: -1
   3:
-    #location: "/home/container/plugins/mcMMO/backup"
+    #location: "/plugins/mcMMO/backup"
     age: 60
-    count: -1
+    count: 10
     size: -1

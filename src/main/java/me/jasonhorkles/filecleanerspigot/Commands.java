@@ -25,8 +25,8 @@ public class Commands implements CommandExecutor {
                 sender.sendMessage(ChatColor.GREEN + "FileCleaner reloaded!");
                 return true;
             case "cleannow":
-                if (sender instanceof Player)
-                    sender.sendMessage(ChatColor.DARK_GREEN + "Cleaning files! Check console for more information.");
+                if (sender instanceof Player) sender.sendMessage(
+                    ChatColor.DARK_GREEN + "Cleaning files! Check console for more information.");
                 instance.cleanFiles();
                 return true;
             default:

@@ -25,8 +25,6 @@ public class FCBungee extends Plugin implements Listener {
 
         loadConfig();
 
-        getLogger().info("Plugin location: \"" + instance.getFile().getAbsolutePath() + "\"");
-
         getProxy().getPluginManager().registerCommand(this, new Commands(instance));
 
         cleanFiles();
@@ -35,8 +33,7 @@ public class FCBungee extends Plugin implements Listener {
     @SuppressWarnings("ResultOfMethodCallIgnored")
     public void loadConfig() {
         // Generate config if it doesn't exist
-        if (!getDataFolder().exists())
-            getDataFolder().mkdir();
+        if (!getDataFolder().exists()) getDataFolder().mkdir();
 
         File file = new File(getDataFolder(), "config.yml");
 
@@ -49,7 +46,7 @@ public class FCBungee extends Plugin implements Listener {
         try {
             // Load the config
             config = ConfigurationProvider.getProvider(YamlConfiguration.class)
-                    .load(new File(getDataFolder(), "config.yml"));
+                .load(new File(getDataFolder(), "config.yml"));
 
         } catch (IOException e) {
             e.printStackTrace();

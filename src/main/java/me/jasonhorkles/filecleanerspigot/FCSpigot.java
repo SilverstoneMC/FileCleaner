@@ -8,7 +8,7 @@ public class FCSpigot extends JavaPlugin {
 
     private FCSpigot instance;
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings("DataFlowIssue")
     @Override
     public void onEnable() {
         instance = this;
@@ -18,12 +18,10 @@ public class FCSpigot extends JavaPlugin {
 
         saveDefaultConfig();
 
-        getLogger().info("Plugin location: \"" + instance.getFile().getAbsolutePath() + "\"");
-
         cleanFiles();
     }
 
-    @SuppressWarnings("ConstantConditions")
+    @SuppressWarnings("DataFlowIssue")
     public void cleanFiles() {
         instance.getLogger().info("Starting file cleaning task...");
         for (String folders : instance.getConfig().getConfigurationSection("folders").getKeys(false)) {

@@ -22,7 +22,8 @@ public class Commands extends Command implements TabExecutor {
 
     public void execute(CommandSender sender, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage(TextComponent.fromLegacyText(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
+            sender.sendMessage(TextComponent.fromLegacyText(
+                ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
             return;
         }
 
@@ -31,8 +32,8 @@ public class Commands extends Command implements TabExecutor {
             sender.sendMessage(new TextComponent(ChatColor.GREEN + "FileCleaner reloaded!"));
 
         } else if (args[0].equalsIgnoreCase("cleannow") && sender.hasPermission("filecleaner.cleannow")) {
-            if (sender instanceof ProxiedPlayer)
-                sender.sendMessage(new TextComponent(ChatColor.DARK_GREEN + "Cleaning files! Check console for more information."));
+            if (sender instanceof ProxiedPlayer) sender.sendMessage(new TextComponent(
+                ChatColor.DARK_GREEN + "Cleaning files! Check console for more information."));
             instance.cleanFiles();
 
         } else sender.sendMessage(
@@ -55,8 +56,7 @@ public class Commands extends Command implements TabExecutor {
         List<String> result = new ArrayList<>();
         if (args.length == 1) {
             for (String a : arguments)
-                if (a.toLowerCase().startsWith(args[0].toLowerCase()))
-                    result.add(a);
+                if (a.toLowerCase().startsWith(args[0].toLowerCase())) result.add(a);
             return result;
         }
         return new ArrayList<>();
