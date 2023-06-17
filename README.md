@@ -1,5 +1,5 @@
 # FileCleaner
-Spigot page: https://www.spigotmc.org/resources/filecleaner.93372/
+Spigot page: https://www.spigotmc.org/resources/filecleaner.93372
 
 Hangar page: https://hangar.papermc.io/JasonHorkles/FileCleaner
 
