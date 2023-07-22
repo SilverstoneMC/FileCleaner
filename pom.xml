@@ -67,27 +67,19 @@
                     </execution>
                 </executions>
             </plugin>
-        </plugins>
-    </build>
 
-    <reporting>
-        <plugins>
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>versions-maven-plugin</artifactId>
                 <version>2.16.0</version>
-                <reportSets>
-                    <reportSet>
-                        <reports>
-                            <report>dependency-updates-report</report>
-                            <report>plugin-updates-report</report>
-                            <report>property-updates-report</report>
-                        </reports>
-                    </reportSet>
-                </reportSets>
+                <configuration>
+                    <generateBackupPoms>false</generateBackupPoms>
+                    <allowMajorUpdates>true</allowMajorUpdates>
+                    <allowMinorUpdates>true</allowMinorUpdates>
+                </configuration>
             </plugin>
         </plugins>
-    </reporting>
+    </build>
 
     <repositories>
         <repository>
