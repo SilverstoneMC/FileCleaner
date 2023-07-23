@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class CleanFiles {
 
-    public void CleanFilesTask(String folderName, JavaPlugin sPlugin, Plugin bPlugin, int age, int count, long size) {
+    public void CleanFilesTask(String folderName, JavaPlugin sPlugin, Plugin bPlugin, com.velocitypowered.api.plugin.Plugin vPlugin, int age, int count, long size) {
         File folder = new File("." + folderName);
         try {
             //noinspection DataFlowIssue
