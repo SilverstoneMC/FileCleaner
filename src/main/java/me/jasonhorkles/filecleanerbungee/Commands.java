@@ -11,19 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Commands extends Command implements TabExecutor {
-
-    private final FCBungee instance;
-
     public Commands(FCBungee instance) {
         super("filecleanerbungee", "filecleaner.command", "fcb");
         this.instance = instance;
     }
 
+    private final FCBungee instance;
 
     public void execute(CommandSender sender, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage(TextComponent.fromLegacyText(
-                ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
+            sender.sendMessage(
+                new TextComponent(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
             return;
         }
 
@@ -37,7 +35,7 @@ public class Commands extends Command implements TabExecutor {
             instance.cleanFiles();
 
         } else sender.sendMessage(
-            TextComponent.fromLegacyText(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
+            new TextComponent(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
     }
 
 

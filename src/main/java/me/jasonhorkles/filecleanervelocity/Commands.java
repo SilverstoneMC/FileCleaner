@@ -2,44 +2,75 @@ package me.jasonhorkles.filecleanervelocity;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
+import com.velocitypowered.api.proxy.Player;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public final class Commands implements SimpleCommand {
+    public Commands(FCVelocity instance) {
+        this.instance = instance;
+    }
+
+    private final FCVelocity instance;
+
     @Override
     public void execute(final Invocation invocation) {
-        CommandSource source = invocation.source();
-        // Get the arguments after the command alias
+        CommandSource sender = invocation.source();
         String[] args = invocation.arguments();
 
-        source.sendMessage(Component.text("Hello World!").color(NamedTextColor.AQUA));
+        if (args.length == 0) {
+            sender.sendMessage(
+                Component.text("Usage: /filecleanervelocity <reload | cleannow>", NamedTextColor.RED));
+            return;
+        }
+
+        if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("filecleaner.reload")) {
+            instance.loadConfig();
+            sender.sendMessage(Component.text("FileCleaner reloaded!", NamedTextColor.GREEN));
+
+        } else if (args[0].equalsIgnoreCase("cleannow") && sender.hasPermission("filecleaner.cleannow")) {
+            if (sender instanceof Player) sender.sendMessage(
+                Component.text("Cleaning files! Check console for more information.",
+                    NamedTextColor.DARK_GREEN));
+            instance.cleanFiles();
+
+        } else sender.sendMessage(
+            Component.text("Usage: /filecleanervelocity <reload | cleannow>", NamedTextColor.RED));
     }
 
-    // This method allows you to control who can execute the command.
-    // If the executor does not have the required permission,
-    // the execution of the command and the control of its autocompletion
-    // will be sent directly to the server on which the sender is located
     @Override
     public boolean hasPermission(final Invocation invocation) {
-        return invocation.source().hasPermission("command.test");
+        return invocation.source().hasPermission("filecleaner.command");
     }
 
-    // With this method you can control the suggestions to send
-    // to the CommandSource according to the arguments
-    // it has already written or other requirements you need
-    @Override
-    public List<String> suggest(final Invocation invocation) {
-        return List.of();
-    }
 
-    // Here you can offer argument suggestions in the same way as the previous method,
-    // but asynchronously. It is recommended to use this method instead of the previous one
-    // especially in cases where you make a more extensive logic to provide the suggestions
+    final List<String> arguments = new ArrayList<>();
+
     @Override
     public CompletableFuture<List<String>> suggestAsync(final Invocation invocation) {
-        return CompletableFuture.completedFuture(List.of());
+        CommandSource sender = invocation.source();
+        String[] args = invocation.arguments();
+
+        if (sender.hasPermission("filecleaner.reload")) {
+            if (!arguments.contains("reload")) arguments.add("reload");
+        } else arguments.remove("reload");
+
+        if (sender.hasPermission("filecleaner.cleannow")) {
+            if (!arguments.contains("cleannow")) arguments.add("cleannow");
+        } else arguments.remove("cleannow");
+
+        if (args.length == 0) return CompletableFuture.completedFuture(arguments);
+
+        List<String> result = new ArrayList<>();
+        if (args.length == 1) {
+            for (String a : arguments)
+                if (a.toLowerCase().startsWith(args[0].toLowerCase())) result.add(a);
+            return CompletableFuture.completedFuture(result);
+        }
+        return CompletableFuture.completedFuture(new ArrayList<>());
     }
 }

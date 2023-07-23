@@ -15,17 +15,13 @@ import java.nio.file.Files;
 @SuppressWarnings("unused")
 public class FCBungee extends Plugin implements Listener {
 
-    private FCBungee instance;
     private Configuration config;
 
     @Override
-    // Startup
     public void onEnable() {
-        instance = this;
-
         loadConfig();
 
-        getProxy().getPluginManager().registerCommand(this, new Commands(instance));
+        getProxy().getPluginManager().registerCommand(this, new Commands(this));
 
         cleanFiles();
     }
@@ -54,7 +50,7 @@ public class FCBungee extends Plugin implements Listener {
     }
 
     public void cleanFiles() {
-        instance.getLogger().info("Starting file cleaning task...");
+        getLogger().info("Starting file cleaning task...");
         for (String folders : config.getSection("folders").getKeys()) {
             String folder = config.getString("folders." + folders + ".location");
 
@@ -63,8 +59,8 @@ public class FCBungee extends Plugin implements Listener {
             int age = config.getInt("folders." + folders + ".age");
             int count = config.getInt("folders." + folders + ".count");
             long size = config.getLong("folders." + folders + ".size");
-            new CleanFiles().CleanFilesTask(folder, null, instance, age, count, size);
+            new CleanFiles().CleanFilesTask(folder, getLogger(), age, count, size);
         }
-        instance.getLogger().info("Done!");
+        getLogger().info("Done!");
     }
 }
