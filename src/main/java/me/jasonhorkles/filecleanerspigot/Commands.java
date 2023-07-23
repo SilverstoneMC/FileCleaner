@@ -18,19 +18,24 @@ public class Commands implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (args.length == 0) return false;
+
         switch (args[0].toLowerCase()) {
-            case "reload":
+            case "reload" -> {
                 plugin.saveDefaultConfig();
                 plugin.reloadConfig();
                 sender.sendMessage(ChatColor.GREEN + "FileCleaner reloaded!");
                 return true;
-            case "cleannow":
+            }
+            case "cleannow" -> {
                 if (sender instanceof Player) sender.sendMessage(
                     ChatColor.DARK_GREEN + "Cleaning files! Check console for more information.");
                 instance.cleanFiles();
                 return true;
-            default:
+            }
+            default -> {
                 return false;
+            }
         }
     }
 }
