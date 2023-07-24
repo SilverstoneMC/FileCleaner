@@ -1,5 +1,6 @@
 package me.jasonhorkles.filecleaner;
 
+
 import java.io.File;
 import java.util.*;
 import java.util.logging.Logger;
@@ -7,7 +8,7 @@ import java.util.stream.Collectors;
 
 public class CleanFiles {
 
-    public void CleanFilesTask(String folderName, Logger logger, int age, int count, long size) {
+    public void CleanFilesTask(String folderName, Object logger, int age, int count, long size) {
         File folder = new File("." + folderName);
         try {
             //noinspection DataFlowIssue
@@ -44,14 +45,32 @@ public class CleanFiles {
                     if (Math.round(file.length() / 1024.0) > (double) size) deleteFile(logger, file);
             }
         } catch (NullPointerException e) {
-            logger.severe(
-                "Couldn't find the folder \"" + folder.getPath() + "\"! Check to make sure it's spelled correctly and is actually a folder.");
+            log(logger,
+                "Couldn't find the folder \"" + folder.getPath() + "\"! Check to make sure it's spelled correctly and is actually a folder.",
+                LogLevel.SEVERE);
         }
     }
 
-    public void deleteFile(Logger logger, File file) {
-        if (file.delete()) logger.info("Successfully deleted file \"" + file.getPath() + "\"");
-        else logger.severe(
-            "Couldn't delete file \"" + file.getPath() + "\" - make sure it's not currently in use!");
+    public void deleteFile(Object logger, File file) {
+        if (file.delete()) log(logger, "Successfully deleted file \"" + file.getPath() + "\"", LogLevel.INFO);
+        else log(logger,
+            "Couldn't delete file \"" + file.getPath() + "\" - make sure it's not currently in use!",
+            LogLevel.SEVERE);
+    }
+
+    private enum LogLevel {
+        INFO, SEVERE
+    }
+
+    private void log(Object logger, String message, LogLevel logLevel) {
+        if (logger instanceof Logger newLogger) switch (logLevel) {
+            case INFO -> newLogger.info(message);
+            case SEVERE -> newLogger.severe(message);
+        }
+
+        if (logger instanceof org.slf4j.Logger newLogger) switch (logLevel) {
+            case INFO -> newLogger.info(message);
+            case SEVERE -> newLogger.error(message);
+        }
     }
 }

@@ -10,6 +10,7 @@ folders:
   # ------------------------------------------------------------------------------------------------------ #
 
   # Set "age", "count", or "size" to -1 to disable that check
+  # "Age", "count", and "size" used together act as an OR statement
 
   # Important: Remember to change any '\' to '/' or there will be errors
   # Note: The plugin developer is not responsible for any accidentally deleted files - take backups regularly!

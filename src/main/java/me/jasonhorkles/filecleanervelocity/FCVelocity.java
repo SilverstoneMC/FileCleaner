@@ -7,27 +7,32 @@ import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
+import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import me.jasonhorkles.filecleaner.CleanFiles;
-import net.md_5.bungee.config.ConfigurationProvider;
-import net.md_5.bungee.config.YamlConfiguration;
+import ninja.leaping.configurate.ConfigurationNode;
+import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
+import org.slf4j.Logger;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
-import java.util.logging.Logger;
+import java.nio.file.Path;
+import java.util.Objects;
 
 @Plugin(id = "filecleaner", name = "FileCleaner", version = "v%VERSION%", url = "https://github.com/SilverstoneMC/FileCleaner", description = "Clean your old files!", authors = {"JasonHorkles"})
 public class FCVelocity {
-
+    private ConfigurationNode config;
     private final ProxyServer server;
     private final Logger logger;
+    private final Path dataDirectory;
 
     @Inject
-    public FCVelocity(ProxyServer server, Logger logger) {
+    public FCVelocity(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
         this.server = server;
         this.logger = logger;
+        this.dataDirectory = dataDirectory;
 
         loadConfig();
         cleanFiles();
@@ -44,25 +49,26 @@ public class FCVelocity {
         commandManager.register(commandMeta, simpleCommand);
     }
 
-    //todo make working config code
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     public void loadConfig() {
         // Generate config if it doesn't exist
-        if (!getDataFolder().exists()) getDataFolder().mkdir();
+        if (!dataDirectory.toFile().exists()) //noinspection ResultOfMethodCallIgnored
+            dataDirectory.toFile().mkdir();
 
-        File file = new File(getDataFolder(), "config.yml");
+        File file = new File(dataDirectory.toFile(), "config.yml");
 
-        if (!file.exists()) try (InputStream in = getResourceAsStream("config.yml")) {
-            Files.copy(in, file.toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        if (!file.exists())
+            try (InputStream in = getClass().getClassLoader().getResourceAsStream("config.yml")) {
+                Files.copy(Objects.requireNonNull(in), file.toPath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        // Load the config
+        final YAMLConfigurationLoader loader = YAMLConfigurationLoader.builder().setPath(file.toPath())
+            .build();
 
         try {
-            // Load the config
-            config = ConfigurationProvider.getProvider(YamlConfiguration.class)
-                .load(new File(getDataFolder(), "config.yml"));
-
+            config = loader.load();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -70,14 +76,16 @@ public class FCVelocity {
 
     public void cleanFiles() {
         logger.info("Starting file cleaning task...");
-        for (String folders : config.getSection("folders").getKeys()) {
-            String folder = config.getString("folders." + folders + ".location");
+        for (ConfigurationNode folders : config.getNode("folders").getChildrenMap().values()) {
+            if (folders.getKey() == null) continue;
 
-            if (folder.equals("")) continue;
+            String folder = config.getNode("folders", folders.getKey(), "location").getString();
 
-            int age = config.getInt("folders." + folders + ".age");
-            int count = config.getInt("folders." + folders + ".count");
-            long size = config.getLong("folders." + folders + ".size");
+            if (folder == null) continue;
+
+            int age = config.getNode("folders", folders.getKey(), "age").getInt();
+            int count = config.getNode("folders", folders.getKey(), "count").getInt();
+            long size = config.getNode("folders", folders.getKey(), "size").getLong();
             new CleanFiles().CleanFilesTask(folder, logger, age, count, size);
         }
         logger.info("Done!");
