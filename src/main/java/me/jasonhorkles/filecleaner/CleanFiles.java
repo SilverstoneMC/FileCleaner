@@ -14,7 +14,7 @@ public class CleanFiles {
             //noinspection DataFlowIssue
             List<File> files = Arrays.stream(folder.listFiles()).collect(Collectors.toList());
 
-            if (files.size() == 0) return;
+            if (files.isEmpty()) return;
 
             if (age > -1) {
                 ArrayList<File> filesToRemove = new ArrayList<>();
