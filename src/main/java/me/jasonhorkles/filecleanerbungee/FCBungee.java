@@ -54,7 +54,7 @@ public class FCBungee extends Plugin implements Listener {
         for (String folders : config.getSection("folders").getKeys()) {
             String folder = config.getString("folders." + folders + ".location");
 
-            if (folder.equals("")) continue;
+            if (folder.isEmpty()) continue;
 
             int age = config.getInt("folders." + folders + ".age");
             int count = config.getInt("folders." + folders + ".count");
