@@ -31,3 +31,8 @@ folders:
     age: 60
     count: 10
     size: -1
+  4:
+    #location: "/plugins/EntityClearer/debug"
+    age: 30
+    count: 3
+    size: -1
