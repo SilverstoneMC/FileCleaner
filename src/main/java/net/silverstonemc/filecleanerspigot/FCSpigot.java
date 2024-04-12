@@ -1,6 +1,6 @@
-package me.jasonhorkles.filecleanerspigot;
+package net.silverstonemc.filecleanerspigot;
 
-import me.jasonhorkles.filecleaner.CleanFiles;
+import net.silverstonemc.filecleaner.CleanFiles;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @SuppressWarnings("unused")

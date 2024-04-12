@@ -1,11 +1,11 @@
-package me.jasonhorkles.filecleanerbungee;
+package net.silverstonemc.filecleanerbungee;
 
-import me.jasonhorkles.filecleaner.CleanFiles;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.api.plugin.Plugin;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
+import net.silverstonemc.filecleaner.CleanFiles;
 
 import java.io.File;
 import java.io.IOException;

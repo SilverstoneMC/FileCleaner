@@ -1,4 +1,4 @@
-package me.jasonhorkles.filecleaner;
+package net.silverstonemc.filecleaner;
 
 
 import java.io.File;

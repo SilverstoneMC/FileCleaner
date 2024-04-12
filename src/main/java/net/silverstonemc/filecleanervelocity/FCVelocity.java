@@ -1,4 +1,4 @@
-package me.jasonhorkles.filecleanervelocity;
+package net.silverstonemc.filecleanervelocity;
 
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
@@ -9,7 +9,7 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
-import me.jasonhorkles.filecleaner.CleanFiles;
+import net.silverstonemc.filecleaner.CleanFiles;
 import ninja.leaping.configurate.ConfigurationNode;
 import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
 import org.slf4j.Logger;

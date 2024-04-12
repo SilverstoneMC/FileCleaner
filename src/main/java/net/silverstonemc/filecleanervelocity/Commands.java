@@ -1,4 +1,4 @@
-package me.jasonhorkles.filecleanervelocity;
+package net.silverstonemc.filecleanervelocity;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;

@@ -1,4 +1,4 @@
-package me.jasonhorkles.filecleanerbungee;
+package net.silverstonemc.filecleanerbungee;
 
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
