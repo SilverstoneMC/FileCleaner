@@ -25,6 +25,6 @@ permissions:
   filecleaner.cleannow:
     default: op
     description: Force the files to be scanned and cleaned up now
-  entityclearer.updatenotifs:
+  filecleaner.updatenotifs:
     default: op
     description: Notifications when there is an update available
