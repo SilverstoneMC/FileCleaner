@@ -1,7 +1,9 @@
 package net.silverstonemc.filecleanerspigot;
 
 import net.silverstonemc.filecleaner.CleanFiles;
+import net.silverstonemc.filecleaner.VersionChecker;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 @SuppressWarnings("unused")
 public class FCSpigot extends JavaPlugin {
@@ -12,7 +14,22 @@ public class FCSpigot extends JavaPlugin {
         getCommand("filecleaner").setExecutor(new Commands(this, this));
         getCommand("filecleaner").setTabCompleter(new TabComplete());
 
+        getServer().getPluginManager().registerEvents(new SpigotUpdateChecker(this), this);
+
         saveDefaultConfig();
+
+        // Log version update
+        FCSpigot instance = this;
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                String latest = new VersionChecker().getLatestVersion();
+                String current = instance.getDescription().getVersion().replace("s", "");
+
+                if (latest == null) return;
+                if (!current.equals(latest)) new SpigotUpdateChecker(instance).logUpdate(current, latest);
+            }
+        }.runTaskLaterAsynchronously(this, 2L);
 
         cleanFiles();
     }

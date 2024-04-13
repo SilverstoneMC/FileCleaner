@@ -17,11 +17,14 @@ commands:
 
 permissions:
   filecleaner.command:
+    default: op
     description: Permisison to see the base command
-    default: op
   filecleaner.reload:
-    description: Reloads the plugin
     default: op
+    description: Reload the plugin
   filecleaner.cleannow:
-    description: Force the files to be scanned and cleaned up now
     default: op
+    description: Force the files to be scanned and cleaned up now
+  entityclearer.updatenotifs:
+    default: op
+    description: Notifications when there is an update available

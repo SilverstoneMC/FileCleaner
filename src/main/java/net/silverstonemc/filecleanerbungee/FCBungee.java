@@ -6,11 +6,13 @@ import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
 import net.silverstonemc.filecleaner.CleanFiles;
+import net.silverstonemc.filecleaner.VersionChecker;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
+import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings("unused")
 public class FCBungee extends Plugin implements Listener {
@@ -22,6 +24,18 @@ public class FCBungee extends Plugin implements Listener {
         loadConfig();
 
         getProxy().getPluginManager().registerCommand(this, new Commands(this));
+
+        getProxy().getPluginManager().registerListener(this, new BungeeUpdateChecker(this));
+
+        // Log version update
+        FCBungee instance = this;
+        getProxy().getScheduler().schedule(this, () -> {
+            String latest = new VersionChecker().getLatestVersion();
+            String current = instance.getDescription().getVersion().replace("b", "");
+
+            if (latest == null) return;
+            if (!current.equals(latest)) new BungeeUpdateChecker(instance).logUpdate(current, latest);
+        }, 100L, TimeUnit.MILLISECONDS);
 
         cleanFiles();
     }
@@ -41,8 +55,8 @@ public class FCBungee extends Plugin implements Listener {
 
         try {
             // Load the config
-            config = ConfigurationProvider.getProvider(YamlConfiguration.class)
-                .load(new File(getDataFolder(), "config.yml"));
+            config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(),
+                "config.yml"));
 
         } catch (IOException e) {
             e.printStackTrace();
