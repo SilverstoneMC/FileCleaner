@@ -65,6 +65,7 @@ public class FCBungee extends Plugin implements Listener {
 
     public void cleanFiles() {
         getLogger().info("Starting file cleaning task...");
+        CleanFiles cleanFiles = new CleanFiles();
         for (String folders : config.getSection("folders").getKeys()) {
             String folder = config.getString("folders." + folders + ".location");
 
@@ -73,7 +74,7 @@ public class FCBungee extends Plugin implements Listener {
             int age = config.getInt("folders." + folders + ".age");
             int count = config.getInt("folders." + folders + ".count");
             long size = config.getLong("folders." + folders + ".size");
-            new CleanFiles().CleanFilesTask(folder, getLogger(), age, count, size);
+            cleanFiles.CleanFilesTask(folder, getLogger(), age, count, size);
         }
         getLogger().info("Done!");
     }

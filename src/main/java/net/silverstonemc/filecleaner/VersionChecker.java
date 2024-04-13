@@ -1,5 +1,6 @@
 package net.silverstonemc.filecleaner;
 
+import org.jetbrains.annotations.Nullable;
 import org.json.JSONObject;
 
 import java.io.InputStream;
@@ -7,7 +8,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 
 public class VersionChecker {
-    public String getLatestVersion() {
+    public @Nullable String getLatestVersion() {
         final String pluginName = "FileCleaner";
         try {
             // Send the request

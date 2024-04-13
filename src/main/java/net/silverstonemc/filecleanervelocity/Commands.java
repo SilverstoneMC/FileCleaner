@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
-public final class Commands implements SimpleCommand {
+public class Commands implements SimpleCommand {
     public Commands(FCVelocity instance) {
         this.instance = instance;
     }
@@ -23,8 +23,8 @@ public final class Commands implements SimpleCommand {
         String[] args = invocation.arguments();
 
         if (args.length == 0) {
-            sender.sendMessage(
-                Component.text("Usage: /filecleanervelocity <reload | cleannow>", NamedTextColor.RED));
+            sender.sendMessage(Component.text("Usage: /filecleanervelocity <reload | cleannow>",
+                NamedTextColor.RED));
             return;
         }
 
@@ -33,13 +33,12 @@ public final class Commands implements SimpleCommand {
             sender.sendMessage(Component.text("FileCleaner reloaded!", NamedTextColor.GREEN));
 
         } else if (args[0].equalsIgnoreCase("cleannow") && sender.hasPermission("filecleaner.cleannow")) {
-            if (sender instanceof Player) sender.sendMessage(
-                Component.text("Cleaning files! Check console for more information.",
-                    NamedTextColor.DARK_GREEN));
+            if (sender instanceof Player) sender.sendMessage(Component.text("Cleaning files! Check console for more information.",
+                NamedTextColor.DARK_GREEN));
             instance.cleanFiles();
 
-        } else sender.sendMessage(
-            Component.text("Usage: /filecleanervelocity <reload | cleannow>", NamedTextColor.RED));
+        } else sender.sendMessage(Component.text("Usage: /filecleanervelocity <reload | cleannow>",
+            NamedTextColor.RED));
     }
 
     @Override

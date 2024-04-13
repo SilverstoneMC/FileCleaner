@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.jetbrains.annotations.NotNull;
 
 public class Commands implements CommandExecutor {
 
@@ -17,7 +18,7 @@ public class Commands implements CommandExecutor {
         this.instance = instance;
     }
 
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (args.length == 0) return false;
 
         switch (args[0].toLowerCase()) {
@@ -28,8 +29,8 @@ public class Commands implements CommandExecutor {
                 return true;
             }
             case "cleannow" -> {
-                if (sender instanceof Player) sender.sendMessage(
-                    ChatColor.DARK_GREEN + "Cleaning files! Check console for more information.");
+                if (sender instanceof Player)
+                    sender.sendMessage(ChatColor.DARK_GREEN + "Cleaning files! Check console for more information.");
                 instance.cleanFiles();
                 return true;
             }

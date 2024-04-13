@@ -37,6 +37,7 @@ public class FCSpigot extends JavaPlugin {
     @SuppressWarnings("DataFlowIssue")
     public void cleanFiles() {
         getLogger().info("Starting file cleaning task...");
+        CleanFiles cleanFiles = new CleanFiles();
         for (String folders : getConfig().getConfigurationSection("folders").getKeys(false)) {
             String folder = getConfig().getString("folders." + folders + ".location");
 
@@ -45,7 +46,7 @@ public class FCSpigot extends JavaPlugin {
             int age = getConfig().getInt("folders." + folders + ".age");
             int count = getConfig().getInt("folders." + folders + ".count");
             long size = getConfig().getLong("folders." + folders + ".size");
-            new CleanFiles().CleanFilesTask(folder, getLogger(), age, count, size);
+            cleanFiles.CleanFilesTask(folder, getLogger(), age, count, size);
         }
         getLogger().info("Done!");
     }

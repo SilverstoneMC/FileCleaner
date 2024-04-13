@@ -20,8 +20,7 @@ public class Commands extends Command implements TabExecutor {
 
     public void execute(CommandSender sender, String[] args) {
         if (args.length == 0) {
-            sender.sendMessage(
-                new TextComponent(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
+            sender.sendMessage(new TextComponent(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
             return;
         }
 
@@ -30,12 +29,12 @@ public class Commands extends Command implements TabExecutor {
             sender.sendMessage(new TextComponent(ChatColor.GREEN + "FileCleaner reloaded!"));
 
         } else if (args[0].equalsIgnoreCase("cleannow") && sender.hasPermission("filecleaner.cleannow")) {
-            if (sender instanceof ProxiedPlayer) sender.sendMessage(new TextComponent(
-                ChatColor.DARK_GREEN + "Cleaning files! Check console for more information."));
+            if (sender instanceof ProxiedPlayer)
+                sender.sendMessage(new TextComponent(ChatColor.DARK_GREEN + "Cleaning files! Check console for more information."));
             instance.cleanFiles();
 
-        } else sender.sendMessage(
-            new TextComponent(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
+        } else
+            sender.sendMessage(new TextComponent(ChatColor.RED + "Usage: /filecleanerbungee <reload | cleannow>"));
     }
 
 

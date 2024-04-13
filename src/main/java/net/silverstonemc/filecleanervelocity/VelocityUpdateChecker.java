@@ -1,7 +1,7 @@
 package net.silverstonemc.filecleanervelocity;
 
 import com.velocitypowered.api.event.Subscribe;
-import com.velocitypowered.api.event.connection.PostLoginEvent;
+import com.velocitypowered.api.event.player.ServerConnectedEvent;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -16,7 +16,7 @@ public class VelocityUpdateChecker {
     public static final String pluginName = "FileCleaner";
 
     @Subscribe
-    public void onJoin(PostLoginEvent event) {
+    public void onJoin(ServerConnectedEvent event) {
         if (event.getPlayer().hasPermission(pluginName.toLowerCase() + ".updatenotifs"))
             // Check for updates asynchronously
             i.server.getScheduler().buildTask(i, () -> {

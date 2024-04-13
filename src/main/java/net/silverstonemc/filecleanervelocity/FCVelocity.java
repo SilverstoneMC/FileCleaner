@@ -95,6 +95,7 @@ public class FCVelocity {
 
     public void cleanFiles() {
         logger.info("Starting file cleaning task...");
+        CleanFiles cleanFiles = new CleanFiles();
         for (ConfigurationNode folders : config.getNode("folders").getChildrenMap().values()) {
             if (folders.getKey() == null) continue;
 
@@ -105,7 +106,7 @@ public class FCVelocity {
             int age = config.getNode("folders", folders.getKey(), "age").getInt();
             int count = config.getNode("folders", folders.getKey(), "count").getInt();
             long size = config.getNode("folders", folders.getKey(), "size").getLong();
-            new CleanFiles().CleanFilesTask(folder, logger, age, count, size);
+            cleanFiles.CleanFilesTask(folder, logger, age, count, size);
         }
         logger.info("Done!");
     }
