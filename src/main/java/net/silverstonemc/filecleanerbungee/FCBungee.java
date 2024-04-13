@@ -35,7 +35,7 @@ public class FCBungee extends Plugin implements Listener {
 
             if (latest == null) return;
             if (!current.equals(latest)) new BungeeUpdateChecker(instance).logUpdate(current, latest);
-        }, 100L, TimeUnit.MILLISECONDS);
+        }, 200L, TimeUnit.MILLISECONDS);
 
         cleanFiles();
     }

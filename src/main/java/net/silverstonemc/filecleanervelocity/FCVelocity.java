@@ -34,19 +34,6 @@ public class FCVelocity {
 
         loadConfig();
 
-        // Log version update
-        FCVelocity instance = this;
-        server.getScheduler().buildTask(this, () -> {
-            String latest = new VersionChecker().getLatestVersion();
-            //noinspection OptionalGetWithoutIsPresent because it should exist
-            String current = server.getPluginManager()
-                .getPlugin(VelocityUpdateChecker.pluginName.toLowerCase()).get().getDescription().getVersion()
-                .get().replace("v", "");
-
-            if (latest == null) return;
-            if (!current.equals(latest)) new VelocityUpdateChecker(instance).logUpdate(current, latest);
-        }).delay(100L, TimeUnit.MILLISECONDS).schedule();
-
         cleanFiles();
     }
 
@@ -67,6 +54,19 @@ public class FCVelocity {
 
         EventManager eventManager = server.getEventManager();
         eventManager.register(this, new VelocityUpdateChecker(this));
+
+        // Log version update
+        FCVelocity instance = this;
+        server.getScheduler().buildTask(this, () -> {
+            String latest = new VersionChecker().getLatestVersion();
+            //noinspection OptionalGetWithoutIsPresent because it should exist
+            String current = server.getPluginManager()
+                .getPlugin(VelocityUpdateChecker.pluginName.toLowerCase()).get().getDescription().getVersion()
+                .get().replace("v", "");
+
+            if (latest == null) return;
+            if (!current.equals(latest)) new VelocityUpdateChecker(instance).logUpdate(current, latest);
+        }).delay(200L, TimeUnit.MILLISECONDS).schedule();
     }
 
     public void loadConfig() {
