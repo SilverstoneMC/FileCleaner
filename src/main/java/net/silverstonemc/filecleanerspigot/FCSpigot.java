@@ -29,7 +29,7 @@ public class FCSpigot extends JavaPlugin {
                 if (latest == null) return;
                 if (!current.equals(latest)) new SpigotUpdateChecker(instance).logUpdate(current, latest);
             }
-        }.runTaskLaterAsynchronously(this, 4L);
+        }.runTaskLaterAsynchronously(this, 10L);
 
         cleanFiles();
     }

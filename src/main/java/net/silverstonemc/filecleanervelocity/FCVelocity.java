@@ -66,7 +66,7 @@ public class FCVelocity {
 
             if (latest == null) return;
             if (!current.equals(latest)) new VelocityUpdateChecker(instance).logUpdate(current, latest);
-        }).delay(200L, TimeUnit.MILLISECONDS).schedule();
+        }).delay(500L, TimeUnit.MILLISECONDS).schedule();
     }
 
     public void loadConfig() {
