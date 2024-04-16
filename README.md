@@ -1,5 +1,5 @@
 # FileCleaner
-Hangar: https://hangar.papermc.io/JasonHorkles/FileCleaner
+Hangar: https://hangar.papermc.io/Silverstone/FileCleaner
 
 Modrinth: https://modrinth.com/plugin/filecleaner
 
