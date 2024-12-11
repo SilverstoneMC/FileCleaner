@@ -1,6 +1,14 @@
-folders:
-  # Location: The location of the folder you want to scan, relative to the server's root directory - remember to remove the # before it for the option to work
+# Location: The location of the file/folder you want to scan, relative to the server's root directory - remember to remove the # before it for the option to work
 
+# Important: Remember to change any '\' to '/' or there will be errors
+# Note: The plugin developer is not responsible for any accidentally deleted files - take backups regularly!
+
+# You can add as many files and folders as you'd like
+
+# Set any of the checks to -1 to disable that specific check
+# "Age", "count", and "size" used together act as an OR statement
+
+folders:
   # ----- THE FOLLOWING OPTIONS CAN EITHER BE USED ALONE OR TOGETHER WITH THE OTHERS IN THIS SECTION ----- #
   #
   #   Age: Any files in the folder that are older than the specified amount of days will be deleted
@@ -8,15 +16,8 @@ folders:
   #   Size: Any files in the folder that are larger than the specified amount in kilobytes will be deleted
   #
   # ------------------------------------------------------------------------------------------------------ #
-
-  # Set "age", "count", or "size" to -1 to disable that check
-  # "Age", "count", and "size" used together act as an OR statement
-
-  # Important: Remember to change any '\' to '/' or there will be errors
-  # Note: The plugin developer is not responsible for any accidentally deleted files - take backups regularly!
-
-  # You can add as many folders as you'd like
-  1: # <- This can be whatever you want; just make sure it's unique
+  
+  1: # <- This number can be whatever you want; just make sure it's unique
     #location: "/logs"
     age: 30
     count: 45
@@ -36,3 +37,18 @@ folders:
     age: 30
     count: 3
     size: -1
+
+
+
+files:
+  # ----- THE FOLLOWING OPTIONS CAN EITHER BE USED ALONE OR TOGETHER WITH THE OTHERS IN THIS SECTION ----- #
+  #
+  #   Age: Delete the file if it's older than the specified amount of days
+  #   Size: Delete the file if it's larger than the specified amount in kilobytes
+  #
+  # ------------------------------------------------------------------------------------------------------ #
+
+  1: # <- This number can be whatever you want; just make sure it's unique
+    #location: "/plugins/tab/errors.log"
+    age: 15
+    size: 250

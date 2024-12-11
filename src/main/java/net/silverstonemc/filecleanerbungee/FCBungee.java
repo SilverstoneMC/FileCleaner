@@ -66,16 +66,32 @@ public class FCBungee extends Plugin implements Listener {
     public void cleanFiles() {
         getLogger().info("Starting file cleaning task...");
         CleanFiles cleanFiles = new CleanFiles();
-        for (String folders : config.getSection("folders").getKeys()) {
-            String folder = config.getString("folders." + folders + ".location");
+
+        // Clean directories
+        for (String key : config.getSection("folders").getKeys()) {
+            String folder = config.getString("folders." + key + ".location");
 
             if (folder.isEmpty()) continue;
 
-            int age = config.getInt("folders." + folders + ".age");
-            int count = config.getInt("folders." + folders + ".count");
-            long size = config.getLong("folders." + folders + ".size");
-            cleanFiles.CleanFilesTask(folder, getLogger(), age, count, size);
+            int age = config.getInt("folders." + key + ".age");
+            int count = config.getInt("folders." + key + ".count");
+            long size = config.getLong("folders." + key + ".size");
+
+            cleanFiles.cleanFilesInDir(folder, getLogger(), age, count, size);
         }
+
+        // Clean individual files
+        for (String key : config.getSection("files").getKeys()) {
+            String file = config.getString("files." + key + ".location");
+
+            if (file.isEmpty()) continue;
+
+            int age = config.getInt("files." + key + ".age");
+            long size = config.getLong("files." + key + ".size");
+
+            cleanFiles.cleanFiles(file, getLogger(), age, size);
+        }
+        
         getLogger().info("Done!");
     }
 }

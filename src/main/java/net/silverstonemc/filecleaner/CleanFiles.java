@@ -6,8 +6,7 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class CleanFiles {
-
-    public void CleanFilesTask(String folderName, Object logger, int age, int count, long size) {
+    public void cleanFilesInDir(String folderName, Object logger, int age, int count, long size) {
         File folder = new File("." + folderName);
         if (folder.listFiles() == null) {
             log(
@@ -28,6 +27,7 @@ public class CleanFiles {
 
                 if (diff > age * 24L * 60L * 60L * 1000L) {
                     deleteFile(logger, file);
+                    // Add files to arraylist to avoid them being removed again below
                     filesToRemove.add(file);
                 }
             }
@@ -39,6 +39,7 @@ public class CleanFiles {
             files.sort(Comparator.comparingLong(File::lastModified));
             for (int x = 0; x < files.size() - count; x++) {
                 deleteFile(logger, files.get(x));
+                // Add files to arraylist to avoid them being removed again below
                 filesToRemove.add(files.get(x));
             }
             files.removeAll(filesToRemove);
@@ -49,6 +50,25 @@ public class CleanFiles {
             for (File file : files)
                 if (Math.round(file.length() / 1024.0) > (double) size) deleteFile(logger, file);
         }
+    }
+
+    /**
+     * Cleans singular files defined in the config.
+     */
+    public void cleanFiles(String fileName, Object logger, int age, long size) {
+        File file = new File("." + fileName);
+        if (!file.exists()) return;
+
+        if (age > -1) {
+            long diff = new Date().getTime() - file.lastModified();
+
+            if (diff > age * 24L * 60L * 60L * 1000L) {
+                deleteFile(logger, file);
+                return;
+            }
+        }
+
+        if (size > -1) if (Math.round(file.length() / 1024.0) > (double) size) deleteFile(logger, file);
     }
 
     public void deleteFile(Object logger, File file) {

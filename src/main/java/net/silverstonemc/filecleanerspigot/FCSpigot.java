@@ -38,16 +38,32 @@ public class FCSpigot extends JavaPlugin {
     public void cleanFiles() {
         getLogger().info("Starting file cleaning task...");
         CleanFiles cleanFiles = new CleanFiles();
-        for (String folders : getConfig().getConfigurationSection("folders").getKeys(false)) {
-            String folder = getConfig().getString("folders." + folders + ".location");
+
+        // Clean directories
+        for (String key : getConfig().getConfigurationSection("folders").getKeys(false)) {
+            String folder = getConfig().getString("folders." + key + ".location");
 
             if (folder == null) continue;
 
-            int age = getConfig().getInt("folders." + folders + ".age");
-            int count = getConfig().getInt("folders." + folders + ".count");
-            long size = getConfig().getLong("folders." + folders + ".size");
-            cleanFiles.CleanFilesTask(folder, getLogger(), age, count, size);
+            int age = getConfig().getInt("folders." + key + ".age");
+            int count = getConfig().getInt("folders." + key + ".count");
+            long size = getConfig().getLong("folders." + key + ".size");
+
+            cleanFiles.cleanFilesInDir(folder, getLogger(), age, count, size);
         }
+
+        // Clean individual files
+        for (String key : getConfig().getConfigurationSection("files").getKeys(false)) {
+            String file = getConfig().getString("files." + key + ".location");
+
+            if (file == null) continue;
+
+            int age = getConfig().getInt("files." + key + ".age");
+            long size = getConfig().getLong("files." + key + ".size");
+
+            cleanFiles.cleanFiles(file, getLogger(), age, size);
+        }
+
         getLogger().info("Done!");
     }
 }

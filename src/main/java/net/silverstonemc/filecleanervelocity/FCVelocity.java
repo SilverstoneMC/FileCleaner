@@ -96,18 +96,36 @@ public class FCVelocity {
     public void cleanFiles() {
         logger.info("Starting file cleaning task...");
         CleanFiles cleanFiles = new CleanFiles();
-        for (ConfigurationNode folders : config.getNode("folders").getChildrenMap().values()) {
-            if (folders.getKey() == null) continue;
 
-            String folder = config.getNode("folders", folders.getKey(), "location").getString();
+        // Clean directories
+        for (ConfigurationNode node : config.getNode("folders").getChildrenMap().values()) {
+            if (node.getKey() == null) continue;
+
+            String folder = config.getNode("folders", node.getKey(), "location").getString();
 
             if (folder == null) continue;
 
-            int age = config.getNode("folders", folders.getKey(), "age").getInt();
-            int count = config.getNode("folders", folders.getKey(), "count").getInt();
-            long size = config.getNode("folders", folders.getKey(), "size").getLong();
-            cleanFiles.CleanFilesTask(folder, logger, age, count, size);
+            int age = config.getNode("folders", node.getKey(), "age").getInt();
+            int count = config.getNode("folders", node.getKey(), "count").getInt();
+            long size = config.getNode("folders", node.getKey(), "size").getLong();
+
+            cleanFiles.cleanFilesInDir(folder, logger, age, count, size);
         }
+
+        // Clean individual files
+        for (ConfigurationNode node : config.getNode("files").getChildrenMap().values()) {
+            if (node.getKey() == null) continue;
+
+            String file = config.getNode("files", node.getKey(), "location").getString();
+
+            if (file == null) continue;
+
+            int age = config.getNode("files", node.getKey(), "age").getInt();
+            long size = config.getNode("files", node.getKey(), "size").getLong();
+
+            cleanFiles.cleanFiles(file, logger, age, size);
+        }
+
         logger.info("Done!");
     }
 }
