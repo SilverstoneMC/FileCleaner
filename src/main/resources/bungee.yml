@@ -1,5 +1,5 @@
 main: net.silverstonemc.filecleanerbungee.FCBungee
-name: FileCleaner
+name: FileCleanerBungee
 version: b%VERSION%
 author: JasonHorkles
 website: https://github.com/SilverstoneMC/FileCleaner

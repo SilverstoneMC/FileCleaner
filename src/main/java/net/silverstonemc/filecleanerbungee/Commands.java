@@ -26,7 +26,7 @@ public class Commands extends Command implements TabExecutor {
 
         if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("filecleaner.reload")) {
             instance.loadConfig();
-            sender.sendMessage(new TextComponent(ChatColor.GREEN + "FileCleaner reloaded!"));
+            sender.sendMessage(new TextComponent(ChatColor.GREEN + "FileCleaner (Bungee) reloaded!"));
 
         } else if (args[0].equalsIgnoreCase("cleannow") && sender.hasPermission("filecleaner.cleannow")) {
             if (sender instanceof ProxiedPlayer)

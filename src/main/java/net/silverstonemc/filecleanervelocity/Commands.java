@@ -30,7 +30,7 @@ public class Commands implements SimpleCommand {
 
         if (args[0].equalsIgnoreCase("reload") && sender.hasPermission("filecleaner.reload")) {
             instance.loadConfig();
-            sender.sendMessage(Component.text("FileCleaner reloaded!", NamedTextColor.GREEN));
+            sender.sendMessage(Component.text("FileCleaner (Velocity) reloaded!", NamedTextColor.GREEN));
 
         } else if (args[0].equalsIgnoreCase("cleannow") && sender.hasPermission("filecleaner.cleannow")) {
             if (sender instanceof Player) sender.sendMessage(Component.text("Cleaning files! Check console for more information.",
