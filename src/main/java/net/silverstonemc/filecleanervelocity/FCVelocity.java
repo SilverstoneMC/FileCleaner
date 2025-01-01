@@ -24,7 +24,7 @@ import java.nio.file.Path;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-@Plugin(id = "filecleanervelocity", name = "FileCleanerVelocity", version = "v%VERSION%", url = "https://github.com/SilverstoneMC/FileCleaner", description = "Clean your old files!", authors = {"JasonHorkles"})
+@Plugin(id = "filecleaner", name = "FileCleaner", version = "v%VERSION%", url = "https://github.com/SilverstoneMC/FileCleaner", description = "Clean your old files!", authors = {"JasonHorkles"})
 public class FCVelocity {
     @Inject
     public FCVelocity(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
