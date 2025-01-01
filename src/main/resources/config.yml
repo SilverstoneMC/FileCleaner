@@ -50,5 +50,5 @@ files:
 
   1: # <- This number can be whatever you want; just make sure it's unique
     #location: "/plugins/tab/errors.log"
-    age: 15
-    size: 250
+    age: 30
+    size: -1
