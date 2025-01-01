@@ -29,13 +29,14 @@ public class FCBungee extends Plugin implements Listener {
 
         // Log version update
         FCBungee instance = this;
-        getProxy().getScheduler().schedule(this, () -> {
-            String latest = new VersionChecker().getLatestVersion();
-            String current = instance.getDescription().getVersion().replace("b", "");
+        getProxy().getScheduler().schedule(
+            this, () -> {
+                String latest = new VersionChecker().getLatestVersion();
+                String current = instance.getDescription().getVersion().replace("b", "");
 
-            if (latest == null) return;
-            if (!current.equals(latest)) new BungeeUpdateChecker(instance).logUpdate(current, latest);
-        }, 500L, TimeUnit.MILLISECONDS);
+                if (latest == null) return;
+                if (!current.equals(latest)) new BungeeUpdateChecker(instance).logUpdate(current, latest);
+            }, 500L, TimeUnit.MILLISECONDS);
 
         cleanFiles();
     }
@@ -55,7 +56,8 @@ public class FCBungee extends Plugin implements Listener {
 
         try {
             // Load the config
-            config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(getDataFolder(),
+            config = ConfigurationProvider.getProvider(YamlConfiguration.class).load(new File(
+                getDataFolder(),
                 "config.yml"));
 
         } catch (IOException e) {
@@ -91,7 +93,7 @@ public class FCBungee extends Plugin implements Listener {
 
             cleanFiles.cleanFiles(file, getLogger(), age, size);
         }
-        
+
         getLogger().info("Done!");
     }
 }

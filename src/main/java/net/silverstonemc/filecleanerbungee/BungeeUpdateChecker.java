@@ -23,17 +23,18 @@ public class BungeeUpdateChecker implements Listener {
 
         if (event.getPlayer().hasPermission(pluginName.toLowerCase() + ".updatenotifs"))
             // Check for updates asynchronously
-            plugin.getProxy().getScheduler().schedule(plugin, () -> {
-                String latest = new VersionChecker().getLatestVersion();
-                String current = plugin.getDescription().getVersion().replace("b", "");
+            plugin.getProxy().getScheduler().schedule(
+                plugin, () -> {
+                    String latest = new VersionChecker().getLatestVersion();
+                    String current = plugin.getDescription().getVersion().replace("b", "");
 
-                if (latest == null) return;
-                if (!current.equals(latest)) event.getPlayer().sendMessage(new ComponentBuilder(
-                    "An update is available for " + pluginName + "! ").color(ChatColor.YELLOW)
-                    .append("(" + current + " → " + latest + ")\n").color(ChatColor.GOLD).append(
-                        "https://github.com/SilverstoneMC/" + pluginName + "/releases/latest")
-                    .color(ChatColor.DARK_AQUA).create());
-            }, 0L, TimeUnit.MILLISECONDS);
+                    if (latest == null) return;
+                    if (!current.equals(latest)) event.getPlayer().sendMessage(new ComponentBuilder(
+                        "An update is available for " + pluginName + "! ").color(ChatColor.YELLOW)
+                        .append("(" + current + " → " + latest + ")\n").color(ChatColor.GOLD).append(
+                            "https://github.com/SilverstoneMC/" + pluginName + "/releases/latest")
+                        .color(ChatColor.DARK_AQUA).create());
+                }, 0L, TimeUnit.MILLISECONDS);
     }
 
     public void logUpdate(String current, String latest) {

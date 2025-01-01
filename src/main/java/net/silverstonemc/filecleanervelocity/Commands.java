@@ -23,7 +23,8 @@ public class Commands implements SimpleCommand {
         String[] args = invocation.arguments();
 
         if (args.length == 0) {
-            sender.sendMessage(Component.text("Usage: /filecleanervelocity <reload | cleannow>",
+            sender.sendMessage(Component.text(
+                "Usage: /filecleanervelocity <reload | cleannow>",
                 NamedTextColor.RED));
             return;
         }
@@ -37,7 +38,8 @@ public class Commands implements SimpleCommand {
                 NamedTextColor.DARK_GREEN));
             instance.cleanFiles();
 
-        } else sender.sendMessage(Component.text("Usage: /filecleanervelocity <reload | cleannow>",
+        } else sender.sendMessage(Component.text(
+            "Usage: /filecleanervelocity <reload | cleannow>",
             NamedTextColor.RED));
     }
 
