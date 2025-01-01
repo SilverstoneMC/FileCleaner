@@ -12,9 +12,9 @@ import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 import net.silverstonemc.filecleaner.CleanFiles;
 import net.silverstonemc.filecleaner.VersionChecker;
-import ninja.leaping.configurate.ConfigurationNode;
-import ninja.leaping.configurate.yaml.YAMLConfigurationLoader;
 import org.slf4j.Logger;
+import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,16 +57,17 @@ public class FCVelocity {
 
         // Log version update
         FCVelocity instance = this;
-        server.getScheduler().buildTask(this, () -> {
-            String latest = new VersionChecker().getLatestVersion();
-            //noinspection OptionalGetWithoutIsPresent because it should exist
-            String current = server.getPluginManager()
-                .getPlugin(VelocityUpdateChecker.pluginName.toLowerCase()).get().getDescription().getVersion()
-                .get().replace("v", "");
+        server.getScheduler().buildTask(
+            this, () -> {
+                String latest = new VersionChecker().getLatestVersion();
+                //noinspection OptionalGetWithoutIsPresent because it should exist
+                String current = server.getPluginManager()
+                    .getPlugin(VelocityUpdateChecker.pluginName.toLowerCase()).get().getDescription()
+                    .getVersion().get().replace("v", "");
 
-            if (latest == null) return;
-            if (!current.equals(latest)) new VelocityUpdateChecker(instance).logUpdate(current, latest);
-        }).delay(500L, TimeUnit.MILLISECONDS).schedule();
+                if (latest == null) return;
+                if (!current.equals(latest)) new VelocityUpdateChecker(instance).logUpdate(current, latest);
+            }).delay(500L, TimeUnit.MILLISECONDS).schedule();
     }
 
     public void loadConfig() {
@@ -84,7 +85,7 @@ public class FCVelocity {
             }
 
         // Load the config
-        YAMLConfigurationLoader loader = YAMLConfigurationLoader.builder().setPath(file.toPath()).build();
+        YamlConfigurationLoader loader = YamlConfigurationLoader.builder().path(file.toPath()).build();
 
         try {
             config = loader.load();
@@ -98,30 +99,30 @@ public class FCVelocity {
         CleanFiles cleanFiles = new CleanFiles();
 
         // Clean directories
-        for (ConfigurationNode node : config.getNode("folders").getChildrenMap().values()) {
-            if (node.getKey() == null) continue;
+        for (ConfigurationNode node : config.node("folders").childrenMap().values()) {
+            if (node.key() == null) continue;
 
-            String folder = config.getNode("folders", node.getKey(), "location").getString();
+            String folder = config.node("folders", node.key(), "location").getString();
 
             if (folder == null) continue;
 
-            int age = config.getNode("folders", node.getKey(), "age").getInt();
-            int count = config.getNode("folders", node.getKey(), "count").getInt();
-            long size = config.getNode("folders", node.getKey(), "size").getLong();
+            int age = config.node("folders", node.key(), "age").getInt();
+            int count = config.node("folders", node.key(), "count").getInt();
+            long size = config.node("folders", node.key(), "size").getLong();
 
             cleanFiles.cleanFilesInDir(folder, logger, age, count, size);
         }
 
         // Clean individual files
-        for (ConfigurationNode node : config.getNode("files").getChildrenMap().values()) {
-            if (node.getKey() == null) continue;
+        for (ConfigurationNode node : config.node("files").childrenMap().values()) {
+            if (node.key() == null) continue;
 
-            String file = config.getNode("files", node.getKey(), "location").getString();
+            String file = config.node("files", node.key(), "location").getString();
 
             if (file == null) continue;
 
-            int age = config.getNode("files", node.getKey(), "age").getInt();
-            long size = config.getNode("files", node.getKey(), "size").getLong();
+            int age = config.node("files", node.key(), "age").getInt();
+            long size = config.node("files", node.key(), "size").getLong();
 
             cleanFiles.cleanFiles(file, logger, age, size);
         }
