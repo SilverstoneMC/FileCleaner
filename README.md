@@ -1,10 +1,1 @@
-# FileCleaner
-Hangar: https://hangar.papermc.io/Silverstone/FileCleaner
-
-Modrinth: https://modrinth.com/plugin/filecleaner
-
-Spigot: https://www.spigotmc.org/resources/93372
-
----
-
-Get support in the Discord server at https://discord.gg/5XFBx8uZVN
+[![GitHub](https://badges.penpow.dev/badges/available/github/cozy.png)](https://github.com/SilverstoneMC/FileCleaner/releases) [![Hangar](https://badges.penpow.dev/badges/available/hangar/cozy.png)](https://hangar.papermc.io/Silverstone/FileCleaner) [![Modrinth](https://badges.penpow.dev/badges/available/modrinth/cozy.png)](https://modrinth.com/project/O7A4dexn) [![Discord](https://badges.penpow.dev/badges/social/discord-plural/cozy.png)](https://discord.gg/5XFBx8uZVN)
