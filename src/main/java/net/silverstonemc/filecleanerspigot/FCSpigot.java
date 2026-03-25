@@ -2,6 +2,8 @@ package net.silverstonemc.filecleanerspigot;
 
 import net.silverstonemc.filecleaner.CleanFiles;
 import net.silverstonemc.filecleaner.VersionChecker;
+
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -11,6 +13,9 @@ public class FCSpigot extends JavaPlugin {
     @SuppressWarnings("DataFlowIssue")
     @Override
     public void onEnable() {
+        //noinspection ResultOfObjectAllocationIgnored
+        new Metrics(this, 30400);
+
         getCommand("filecleaner").setExecutor(new Commands(this, this));
         getCommand("filecleaner").setTabCompleter(new TabComplete());
 

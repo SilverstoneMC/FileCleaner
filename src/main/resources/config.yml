@@ -52,3 +52,10 @@ files:
     #location: "/plugins/tab/errors.log"
     age: 30
     size: -1
+
+
+
+# This plugin uses bStats metrics
+# https://bstats.org/plugin/bukkit/FileCleaner/30400
+# https://bstats.org/plugin/velocity/FileCleaner/30402
+# Metrics can be disabled in the bStats config.yml

@@ -10,8 +10,11 @@ import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
+
 import net.silverstonemc.filecleaner.CleanFiles;
 import net.silverstonemc.filecleaner.VersionChecker;
+
+import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.ConfigurationNode;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
@@ -27,10 +30,11 @@ import java.util.concurrent.TimeUnit;
 @Plugin(id = "filecleaner", name = "FileCleaner", version = "v%VERSION%", url = "https://github.com/SilverstoneMC/FileCleaner", description = "Clean your old files!", authors = {"JasonHorkles"})
 public class FCVelocity {
     @Inject
-    public FCVelocity(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory) {
+    public FCVelocity(ProxyServer server, Logger logger, @DataDirectory Path dataDirectory, Metrics.Factory metricsFactory) {
         this.server = server;
         this.logger = logger;
         this.dataDirectory = dataDirectory;
+        this.metricsFactory = metricsFactory;
 
         loadConfig();
 
@@ -39,12 +43,15 @@ public class FCVelocity {
 
     public final ProxyServer server;
     public final Logger logger;
+    private final Metrics.Factory metricsFactory;
 
     private ConfigurationNode config;
     private final Path dataDirectory;
 
     @Subscribe
     public void onProxyInitialize(ProxyInitializeEvent event) {
+        metricsFactory.make(this, 30402);
+
         CommandManager commandManager = server.getCommandManager();
         CommandMeta commandMeta = commandManager.metaBuilder("filecleanervelocity").aliases("fcv")
             .plugin(this).build();
