@@ -27,12 +27,12 @@ public class SpigotUpdateChecker implements Listener {
             new BukkitRunnable() {
                 @Override
                 public void run() {
-                    String latest = new VersionChecker().getLatestVersion();
                     String current = plugin.getDescription().getVersion().replace("s", "");
+                    String latest = new VersionChecker().getLatestVersion();
 
                     if (latest == null) return;
                     if (!current.equals(latest)) event.getPlayer()
-                        .sendMessage(ChatColor.YELLOW + "An update is available for " + pluginName + "! " + ChatColor.GOLD + "(" + current + " → " + latest + ")\n" + ChatColor.DARK_AQUA + "https://github.com/SilverstoneMC/" + pluginName + "/releases/latest");
+                        .sendMessage(ChatColor.YELLOW + "An update is available for " + pluginName + "! " + ChatColor.GOLD + "(" + current + " → " + latest + ")\n" + ChatColor.DARK_AQUA + VersionChecker.PLUGIN_URL);
                 }
             }.runTaskAsynchronously(plugin);
     }
@@ -42,6 +42,6 @@ public class SpigotUpdateChecker implements Listener {
 
         plugin.getLogger()
             .warning("An update is available for " + pluginName + "! (" + current + " → " + latest + ")");
-        plugin.getLogger().warning("https://github.com/SilverstoneMC/" + pluginName + "/releases/latest");
+        plugin.getLogger().warning(VersionChecker.PLUGIN_URL);
     }
 }

@@ -24,24 +24,22 @@ public class VelocityUpdateChecker {
             // Check for updates asynchronously
             i.server.getScheduler().buildTask(
                 i, () -> {
-                    String latest = new VersionChecker().getLatestVersion();
                     //noinspection OptionalGetWithoutIsPresent because it should exist
                     String current = i.server.getPluginManager().getPlugin(pluginName.toLowerCase()).get()
                         .getDescription().getVersion().get().replace("v", "");
+                    String latest = new VersionChecker().getLatestVersion();
 
                     if (latest == null) return;
                     if (!current.equals(latest)) event.getPlayer().sendMessage(Component.text("An update is available for " + pluginName + "! ",
                             NamedTextColor.YELLOW)
                         .append(Component.text("(" + current + " → " + latest + ")\n", NamedTextColor.GOLD))
-                        .append(Component.text(
-                                "https://github.com/SilverstoneMC/" + pluginName + "/releases/latest",
-                                NamedTextColor.DARK_AQUA)
-                            .clickEvent(ClickEvent.openUrl("https://github.com/SilverstoneMC/" + pluginName + "/releases/latest"))));
+                        .append(Component.text(VersionChecker.PLUGIN_URL, NamedTextColor.DARK_AQUA)
+                            .clickEvent(ClickEvent.openUrl(VersionChecker.PLUGIN_URL))));
                 }).schedule();
     }
 
     public void logUpdate(String current, String latest) {
         i.logger.warn("An update is available for " + pluginName + "! ({} → {})", current, latest);
-        i.logger.warn("https://github.com/SilverstoneMC/" + pluginName + "/releases/latest");
+        i.logger.warn(VersionChecker.PLUGIN_URL);
     }
 }
