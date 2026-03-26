@@ -8,6 +8,9 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class CleanFiles {
+    public static int filesDeleted = 0;
+    public static double mbSaved = 0;
+
     public void cleanFilesInDir(String folderName, Object logger, int age, int count, long size) {
         File folder = new File("." + folderName);
         if (folder.listFiles() == null) {
@@ -77,8 +80,14 @@ public class CleanFiles {
         // Make sure the file is actually a file and not a directory before trying to delete it
         if (!file.isFile()) return;
 
-        if (file.delete()) log(logger, "Successfully deleted file \"" + file.getPath() + "\"", LogLevel.INFO);
-        else log(
+        long fileSize = file.length();
+
+        if (file.delete()) {
+            log(logger, "Successfully deleted file \"" + file.getPath() + "\"", LogLevel.INFO);
+            filesDeleted++;
+            mbSaved += Math.round(fileSize / 1024.0) / 1024.0;
+
+        } else log(
             logger,
             "Couldn't delete file \"" + file.getPath() + "\" - make sure it's not currently in use!",
             LogLevel.SEVERE);

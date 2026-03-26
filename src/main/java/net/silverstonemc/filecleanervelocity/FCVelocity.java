@@ -155,10 +155,10 @@ public class FCVelocity {
         }
 
         sender.sendMessage(Component.text(
-            "Done! " + CleanFiles.filesCleaned + " files cleaned, saving " + CleanFiles.mbSaved + " MB.",
+            "Done! " + CleanFiles.filesDeleted + " files deleted, saving " + CleanFiles.mbSaved + " MB.",
             NamedTextColor.DARK_GREEN));
 
-        CleanFiles.filesCleaned = 0;
+        CleanFiles.filesDeleted = 0;
         CleanFiles.mbSaved = 0;
     }
 }
