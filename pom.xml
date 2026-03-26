@@ -64,7 +64,6 @@
                 <configuration>
                     <includes>
                         <include>${project.build.directory}\classes\plugin.yml</include>
-                        <include>${project.build.directory}\classes\bungee.yml</include>
                         <include>${project.build.directory}\classes\velocity-plugin.json</include>
                     </includes>
                     <replacements>
