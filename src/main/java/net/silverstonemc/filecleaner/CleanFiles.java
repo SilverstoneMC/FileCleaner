@@ -85,7 +85,7 @@ public class CleanFiles {
         if (file.delete()) {
             log(logger, "Successfully deleted file \"" + file.getPath() + "\"", LogLevel.INFO);
             filesDeleted++;
-            mbSaved += Math.round(fileSize / 1024.0) / 1024.0;
+            mbSaved += Math.round((fileSize / (1024.0 * 1024.0)) * 100.0) / 100.0;
 
         } else log(
             logger,
