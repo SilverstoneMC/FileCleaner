@@ -1,6 +1,9 @@
+// Copyright JasonHorkles and contributors
+// SPDX-License-Identifier: GPL-3.0-or-later
 package net.silverstonemc.filecleanerspigot;
 
 import net.silverstonemc.filecleaner.VersionChecker;
+
 import org.bukkit.ChatColor;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

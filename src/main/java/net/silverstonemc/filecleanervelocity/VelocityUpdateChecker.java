@@ -1,7 +1,10 @@
+// Copyright JasonHorkles and contributors
+// SPDX-License-Identifier: GPL-3.0-or-later
 package net.silverstonemc.filecleanervelocity;
 
 import com.velocitypowered.api.event.Subscribe;
 import com.velocitypowered.api.event.player.ServerConnectedEvent;
+
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.event.ClickEvent;
 import net.kyori.adventure.text.format.NamedTextColor;
