@@ -20,6 +20,7 @@ package net.silverstonemc.filecleanervelocity;
 import com.google.inject.Inject;
 import com.velocitypowered.api.command.CommandManager;
 import com.velocitypowered.api.command.CommandMeta;
+import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
 import com.velocitypowered.api.event.EventManager;
 import com.velocitypowered.api.event.Subscribe;
@@ -28,6 +29,8 @@ import com.velocitypowered.api.plugin.Plugin;
 import com.velocitypowered.api.plugin.annotation.DataDirectory;
 import com.velocitypowered.api.proxy.ProxyServer;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.NamedTextColor;
 import net.silverstonemc.filecleaner.CleanFiles;
 import net.silverstonemc.filecleaner.VersionChecker;
 
@@ -55,7 +58,7 @@ public class FCVelocity {
 
         loadConfig();
 
-        cleanFiles();
+        cleanFiles(server.getConsoleCommandSource());
     }
 
     public final ProxyServer server;
@@ -118,8 +121,8 @@ public class FCVelocity {
         }
     }
 
-    public void cleanFiles() {
-        logger.info("Starting file cleaning task...");
+    public void cleanFiles(CommandSource sender) {
+        sender.sendMessage(Component.text("Starting file cleaning task...", NamedTextColor.GOLD));
         CleanFiles cleanFiles = new CleanFiles();
 
         // Clean directories
@@ -151,6 +154,11 @@ public class FCVelocity {
             cleanFiles.cleanFiles(file, logger, age, size);
         }
 
-        logger.info("Done!");
+        sender.sendMessage(Component.text(
+            "Done! " + CleanFiles.filesCleaned + " files cleaned, saving " + CleanFiles.mbSaved + " MB.",
+            NamedTextColor.DARK_GREEN));
+
+        CleanFiles.filesCleaned = 0;
+        CleanFiles.mbSaved = 0;
     }
 }

@@ -6,7 +6,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,12 +29,12 @@ public class Commands implements CommandExecutor {
                 sender.sendMessage(ChatColor.GREEN + "FileCleaner reloaded!");
                 return true;
             }
+
             case "cleannow" -> {
-                if (sender instanceof Player)
-                    sender.sendMessage(ChatColor.DARK_GREEN + "Cleaning files! Check console for more information.");
-                instance.cleanFiles();
+                instance.cleanFiles(sender);
                 return true;
             }
+
             default -> {
                 return false;
             }

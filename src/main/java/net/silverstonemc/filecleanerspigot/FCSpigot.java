@@ -21,6 +21,9 @@ import net.silverstonemc.filecleaner.CleanFiles;
 import net.silverstonemc.filecleaner.VersionChecker;
 
 import org.bstats.bukkit.Metrics;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -53,12 +56,12 @@ public class FCSpigot extends JavaPlugin {
             }
         }.runTaskLaterAsynchronously(this, 10L);
 
-        cleanFiles();
+        cleanFiles(Bukkit.getConsoleSender());
     }
 
     @SuppressWarnings("DataFlowIssue")
-    public void cleanFiles() {
-        getLogger().info("Starting file cleaning task...");
+    public void cleanFiles(CommandSender sender) {
+        sender.sendMessage(ChatColor.GOLD + "Starting file cleaning task...");
         CleanFiles cleanFiles = new CleanFiles();
 
         // Clean directories
@@ -86,6 +89,9 @@ public class FCSpigot extends JavaPlugin {
             cleanFiles.cleanFiles(file, getLogger(), age, size);
         }
 
-        getLogger().info("Done!");
+        sender.sendMessage(ChatColor.DARK_GREEN + "Done! " + CleanFiles.filesCleaned + " files cleaned, saving " + CleanFiles.mbSaved + " MB.");
+
+        CleanFiles.filesCleaned = 0;
+        CleanFiles.mbSaved = 0;
     }
 }

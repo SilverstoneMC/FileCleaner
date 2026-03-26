@@ -4,7 +4,6 @@ package net.silverstonemc.filecleanervelocity;
 
 import com.velocitypowered.api.command.CommandSource;
 import com.velocitypowered.api.command.SimpleCommand;
-import com.velocitypowered.api.proxy.Player;
 
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
@@ -36,14 +35,12 @@ public class Commands implements SimpleCommand {
             instance.loadConfig();
             sender.sendMessage(Component.text("FileCleaner (Velocity) reloaded!", NamedTextColor.GREEN));
 
-        } else if (args[0].equalsIgnoreCase("cleannow") && sender.hasPermission("filecleaner.cleannow")) {
-            if (sender instanceof Player) sender.sendMessage(Component.text("Cleaning files! Check console for more information.",
-                NamedTextColor.DARK_GREEN));
-            instance.cleanFiles();
+        } else if (args[0].equalsIgnoreCase("cleannow") && sender.hasPermission("filecleaner.cleannow"))
+            instance.cleanFiles(sender);
 
-        } else sender.sendMessage(Component.text(
-            "Usage: /filecleanervelocity <reload | cleannow>",
-            NamedTextColor.RED));
+        else sender.sendMessage(Component.text(
+                "Usage: /filecleanervelocity <reload | cleannow>",
+                NamedTextColor.RED));
     }
 
     @Override
