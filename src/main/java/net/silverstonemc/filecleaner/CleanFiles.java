@@ -8,8 +8,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class CleanFiles {
-    public static int filesDeleted = 0;
-    public static double mbSaved = 0;
+    public static int filesDeleted;
+    public static double mbSaved;
 
     public void scanFilesInDir(String folderName, Object logger, int age, int count, long size) {
         File folder = new File("." + folderName);
