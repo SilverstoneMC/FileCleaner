@@ -137,7 +137,7 @@ public class FCVelocity {
             int count = config.node("folders", node.key(), "count").getInt();
             long size = config.node("folders", node.key(), "size").getLong();
 
-            cleanFiles.cleanFilesInDir(folder, logger, age, count, size);
+            cleanFiles.scanFilesInDir(folder, logger, age, count, size);
         }
 
         // Clean individual files
@@ -151,7 +151,7 @@ public class FCVelocity {
             int age = config.node("files", node.key(), "age").getInt();
             long size = config.node("files", node.key(), "size").getLong();
 
-            cleanFiles.cleanFiles(file, logger, age, size);
+            cleanFiles.scanFile(file, logger, age, size);
         }
 
         sender.sendMessage(Component.text(

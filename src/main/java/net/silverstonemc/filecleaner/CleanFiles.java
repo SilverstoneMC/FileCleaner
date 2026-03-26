@@ -11,7 +11,7 @@ public class CleanFiles {
     public static int filesDeleted = 0;
     public static double mbSaved = 0;
 
-    public void cleanFilesInDir(String folderName, Object logger, int age, int count, long size) {
+    public void scanFilesInDir(String folderName, Object logger, int age, int count, long size) {
         File folder = new File("." + folderName);
         if (folder.listFiles() == null) {
             log(
@@ -58,9 +58,9 @@ public class CleanFiles {
     }
 
     /**
-     * Cleans singular files defined in the config.
+     * Scans and deletes singular files defined in the config.
      */
-    public void cleanFiles(String fileName, Object logger, int age, long size) {
+    public void scanFile(String fileName, Object logger, int age, long size) {
         File file = new File("." + fileName);
         if (!file.exists()) return;
 

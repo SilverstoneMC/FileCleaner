@@ -74,7 +74,7 @@ public class FCSpigot extends JavaPlugin {
             int count = getConfig().getInt("folders." + key + ".count");
             long size = getConfig().getLong("folders." + key + ".size");
 
-            cleanFiles.cleanFilesInDir(folder, getLogger(), age, count, size);
+            cleanFiles.scanFilesInDir(folder, getLogger(), age, count, size);
         }
 
         // Clean individual files
@@ -86,7 +86,7 @@ public class FCSpigot extends JavaPlugin {
             int age = getConfig().getInt("files." + key + ".age");
             long size = getConfig().getLong("files." + key + ".size");
 
-            cleanFiles.cleanFiles(file, getLogger(), age, size);
+            cleanFiles.scanFile(file, getLogger(), age, size);
         }
 
         sender.sendMessage(ChatColor.DARK_GREEN + "Done! " + CleanFiles.filesDeleted + " files deleted, saving " + CleanFiles.mbSaved + " MB.");
