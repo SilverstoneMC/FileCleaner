@@ -74,6 +74,9 @@ public class CleanFiles {
     }
 
     public void deleteFile(Object logger, File file) {
+        // Make sure the file is actually a file and not a directory before trying to delete it
+        if (!file.isFile()) return;
+
         if (file.delete()) log(logger, "Successfully deleted file \"" + file.getPath() + "\"", LogLevel.INFO);
         else log(
             logger,
