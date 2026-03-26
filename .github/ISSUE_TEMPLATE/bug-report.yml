@@ -12,7 +12,7 @@ body:
 - type: input
   attributes:
     label: Link to latest.log file
-    description: "Reproduce your problem, upload your `/logs/latest.log` file to https://paste.gg/, click \"Submit anonymously\", and paste the URL below"
+    description: "Reproduce your problem, upload your `/logs/latest.log` file to https://mclo.gs, click \"save\", and paste the URL below"
   validations:
     required: true
 
