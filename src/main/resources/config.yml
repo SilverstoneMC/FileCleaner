@@ -1,9 +1,12 @@
-# Location: The location of the file/folder you want to scan, relative to the server's root directory - remember to remove the # before it for the option to work
+# This config was generated for version %VERSION%
+# Find the latest config at https://github.com/SilverstoneMC/FileCleaner/blob/main/src/main/resources/config.yml
 
 # Important: Remember to change any '\' to '/' or there will be errors
-# Note: The plugin developer is not responsible for any accidentally deleted files - take backups regularly!
+# Note: The plugin developer is not responsible for any accidentally deleted files. Take backups regularly!
 
 # You can add as many files and folders as you'd like
+# The plugin will not traverse nor delete subfolders
+# Remember to remove the # before each location to enable the checks
 
 # Set any of the checks to -1 to disable that specific check
 # "Age", "count", and "size" used together act as an OR statement
@@ -11,9 +14,11 @@
 folders:
   # ----- THE FOLLOWING OPTIONS CAN EITHER BE USED ALONE OR TOGETHER WITH THE OTHERS IN THIS SECTION ----- #
   #
+  #   Location: The location of the folder you want to scan, relative to the server's root directory
   #   Age: Any files in the folder that are older than the specified amount of days will be deleted
   #   Count: If the folder has more than this many files, it will delete any extras starting from the oldest
   #   Size: Any files in the folder that are larger than the specified amount in kilobytes will be deleted
+  #   Exclude: Files within the folder that should be skipped (case-sensitive, supports regex)
   #
   # ------------------------------------------------------------------------------------------------------ #
   
@@ -22,27 +27,36 @@ folders:
     age: 30
     count: 45
     size: 500
+    exclude:
+      - "latest.log"
+
   2:
     #location: "/plugins/Skript/backups"
     age: -1
     count: 10
     size: -1
+    exclude: []
+
   3:
     #location: "/plugins/mcMMO/backup"
     age: 60
     count: 10
     size: -1
+    exclude: []
+
   4:
     #location: "/plugins/EntityClearer/debug"
     age: 30
     count: 3
     size: -1
+    exclude: []
 
 
 
 files:
   # ----- THE FOLLOWING OPTIONS CAN EITHER BE USED ALONE OR TOGETHER WITH THE OTHERS IN THIS SECTION ----- #
   #
+  #   Location: The location of the file you want to scan, relative to the server's root directory
   #   Age: Delete the file if it's older than the specified amount of days
   #   Size: Delete the file if it's larger than the specified amount in kilobytes
   #

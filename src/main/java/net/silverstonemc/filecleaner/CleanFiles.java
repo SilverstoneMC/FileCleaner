@@ -5,13 +5,16 @@ package net.silverstonemc.filecleaner;
 import java.io.File;
 import java.util.*;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
 public class CleanFiles {
     public static int filesDeleted;
     public static double mbSaved;
 
-    public void scanFilesInDir(String folderName, Object logger, int age, int count, long size) {
+    @SuppressWarnings("MethodWithTooManyParameters")
+    public void scanFilesInDir(String folderName, Object logger, int age, int count, long size, List<String> excludedFiles) {
         File folder = new File("." + folderName);
         if (folder.listFiles() == null) {
             log(
@@ -21,13 +24,56 @@ public class CleanFiles {
             return;
         }
         //noinspection DataFlowIssue
-        List<File> files = Arrays.stream(folder.listFiles()).collect(Collectors.toList());
+        List<File> fileList = Arrays.stream(folder.listFiles()).collect(Collectors.toList());
 
-        if (files.isEmpty()) return;
+        if (fileList.isEmpty()) return;
 
+        // Remove excluded files from the list of files to check
+        if (excludedFiles != null && !excludedFiles.isEmpty()) {
+            List<File> filesToRemove = new ArrayList<>();
+            Map<String, Pattern> compiledPatterns = new HashMap<>();
+            Set<String> invalidPatterns = new HashSet<>();
+
+            for (File file : fileList) {
+                boolean excluded = false;
+
+                for (String excludedRule : excludedFiles) {
+                    // Preserve exact-match behavior for those that don't use regex
+                    if (excludedRule.equals(file.getName())) {
+                        excluded = true;
+                        break;
+                    }
+
+                    Pattern pattern = compiledPatterns.get(excludedRule);
+                    if (pattern == null && !invalidPatterns.contains(excludedRule)) try {
+                        pattern = Pattern.compile(excludedRule);
+                        compiledPatterns.put(excludedRule, pattern);
+                    } catch (PatternSyntaxException ex) {
+                        invalidPatterns.add(excludedRule);
+                        log(logger, "Invalid excluded file regex: \"" + excludedRule + "\"", LogLevel.SEVERE);
+                    }
+
+                    if (pattern != null && pattern.matcher(file.getName()).matches()) {
+                        excluded = true;
+                        break;
+                    }
+                }
+
+                if (excluded) {
+                    log(
+                        logger,
+                        "Skipping file \"" + file.getPath() + "\" based on config exclusions",
+                        LogLevel.INFO);
+                    filesToRemove.add(file);
+                }
+            }
+            fileList.removeAll(filesToRemove);
+        }
+
+        // Check age
         if (age > -1) {
             List<File> filesToRemove = new ArrayList<>();
-            for (File file : files) {
+            for (File file : fileList) {
                 long diff = new Date().getTime() - file.lastModified();
 
                 if (diff > age * 24L * 60L * 60L * 1000L) {
@@ -36,23 +82,25 @@ public class CleanFiles {
                     filesToRemove.add(file);
                 }
             }
-            files.removeAll(filesToRemove);
+            fileList.removeAll(filesToRemove);
         }
 
+        // Check count
         if (count > -1) {
             List<File> filesToRemove = new ArrayList<>();
-            files.sort(Comparator.comparingLong(File::lastModified));
-            for (int x = 0; x < files.size() - count; x++) {
-                deleteFile(logger, files.get(x));
+            fileList.sort(Comparator.comparingLong(File::lastModified));
+            for (int x = 0; x < fileList.size() - count; x++) {
+                deleteFile(logger, fileList.get(x));
                 // Add files to arraylist to avoid them being removed again below
-                filesToRemove.add(files.get(x));
+                filesToRemove.add(fileList.get(x));
             }
-            files.removeAll(filesToRemove);
+            fileList.removeAll(filesToRemove);
         }
 
+        // Check size
         if (size > -1) {
-            files.sort(Comparator.comparingLong(File::length));
-            for (File file : files)
+            fileList.sort(Comparator.comparingLong(File::length));
+            for (File file : fileList)
                 if (Math.round(file.length() / 1024.0) > (double) size) deleteFile(logger, file);
         }
     }

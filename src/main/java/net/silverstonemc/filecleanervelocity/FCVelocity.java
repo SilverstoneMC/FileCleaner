@@ -37,6 +37,7 @@ import net.silverstonemc.filecleaner.VersionChecker;
 import org.bstats.velocity.Metrics;
 import org.slf4j.Logger;
 import org.spongepowered.configurate.ConfigurationNode;
+import org.spongepowered.configurate.serialize.SerializationException;
 import org.spongepowered.configurate.yaml.YamlConfigurationLoader;
 
 import java.io.File;
@@ -44,6 +45,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -122,7 +124,9 @@ public class FCVelocity {
     }
 
     public void cleanFiles(CommandSource sender) {
-        sender.sendMessage(Component.text("Starting file cleaning task...", NamedTextColor.GOLD));
+        sender.sendMessage(Component.text(
+            "[FileCleaner] Starting file cleaning task...",
+            NamedTextColor.GOLD));
         CleanFiles cleanFiles = new CleanFiles();
 
         // Clean directories
@@ -136,8 +140,14 @@ public class FCVelocity {
             int age = config.node("folders", node.key(), "age").getInt();
             int count = config.node("folders", node.key(), "count").getInt();
             long size = config.node("folders", node.key(), "size").getLong();
+            List<String> excludedFiles;
+            try {
+                excludedFiles = config.node("folders", node.key(), "exclude").getList(String.class);
+            } catch (SerializationException e) {
+                throw new RuntimeException(e);
+            }
 
-            cleanFiles.scanFilesInDir(folder, logger, age, count, size);
+            cleanFiles.scanFilesInDir(folder, logger, age, count, size, excludedFiles);
         }
 
         // Clean individual files
@@ -154,8 +164,9 @@ public class FCVelocity {
             cleanFiles.scanFile(file, logger, age, size);
         }
 
+        String s = CleanFiles.filesDeleted == 1 ? "" : "s";
         sender.sendMessage(Component.text(
-            "Done! " + CleanFiles.filesDeleted + " files deleted, saving " + CleanFiles.mbSaved + " MB.",
+            "[FileCleaner] Done! " + CleanFiles.filesDeleted + " file" + s + " deleted, saving " + CleanFiles.mbSaved + " MB",
             NamedTextColor.DARK_GREEN));
 
         CleanFiles.filesDeleted = 0;

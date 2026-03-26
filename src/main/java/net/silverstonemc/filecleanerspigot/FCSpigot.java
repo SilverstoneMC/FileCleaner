@@ -27,6 +27,8 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.List;
+
 @SuppressWarnings("unused")
 public class FCSpigot extends JavaPlugin {
 
@@ -61,7 +63,7 @@ public class FCSpigot extends JavaPlugin {
 
     @SuppressWarnings("DataFlowIssue")
     public void cleanFiles(CommandSender sender) {
-        sender.sendMessage(ChatColor.GOLD + "Starting file cleaning task...");
+        sender.sendMessage(ChatColor.GOLD + "[FileCleaner] Starting file cleaning task...");
         CleanFiles cleanFiles = new CleanFiles();
 
         // Clean directories
@@ -73,8 +75,9 @@ public class FCSpigot extends JavaPlugin {
             int age = getConfig().getInt("folders." + key + ".age");
             int count = getConfig().getInt("folders." + key + ".count");
             long size = getConfig().getLong("folders." + key + ".size");
+            List<String> excludedFiles = getConfig().getStringList("folders." + key + ".exclude");
 
-            cleanFiles.scanFilesInDir(folder, getLogger(), age, count, size);
+            cleanFiles.scanFilesInDir(folder, getLogger(), age, count, size, excludedFiles);
         }
 
         // Clean individual files
@@ -89,7 +92,8 @@ public class FCSpigot extends JavaPlugin {
             cleanFiles.scanFile(file, getLogger(), age, size);
         }
 
-        sender.sendMessage(ChatColor.DARK_GREEN + "Done! " + CleanFiles.filesDeleted + " files deleted, saving " + CleanFiles.mbSaved + " MB.");
+        String s = CleanFiles.filesDeleted == 1 ? "" : "s";
+        sender.sendMessage(ChatColor.DARK_GREEN + "[FileCleaner] Done! " + CleanFiles.filesDeleted + " file" + s + " deleted, saving " + CleanFiles.mbSaved + " MB");
 
         CleanFiles.filesDeleted = 0;
         CleanFiles.mbSaved = 0;
