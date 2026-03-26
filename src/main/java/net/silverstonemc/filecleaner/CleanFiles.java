@@ -82,7 +82,8 @@ public class CleanFiles {
     }
 
     private enum LogLevel {
-        INFO, SEVERE
+        INFO,
+        SEVERE
     }
 
     private void log(Object logger, String message, LogLevel logLevel) {
