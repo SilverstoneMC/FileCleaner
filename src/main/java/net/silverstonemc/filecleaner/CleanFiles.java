@@ -90,11 +90,13 @@ public class CleanFiles {
     }
 
     private void log(Object logger, String message, LogLevel logLevel) {
+        // Used by Spigot
         if (logger instanceof Logger newLogger) switch (logLevel) {
             case INFO -> newLogger.info(message);
             case SEVERE -> newLogger.severe(message);
         }
 
+        // Used by Velocity
         if (logger instanceof org.slf4j.Logger newLogger) switch (logLevel) {
             case INFO -> newLogger.info(message);
             case SEVERE -> newLogger.error(message);
