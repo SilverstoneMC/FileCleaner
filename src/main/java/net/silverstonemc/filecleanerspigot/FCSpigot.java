@@ -92,10 +92,7 @@ public class FCSpigot extends JavaPlugin {
             cleanFiles.scanFile(file, getLogger(), age, size);
         }
 
-        String s = CleanFiles.filesDeleted == 1 ? "" : "s";
-        sender.sendMessage(ChatColor.DARK_GREEN + "[FileCleaner] Done! " + CleanFiles.filesDeleted + " file" + s + " deleted, saving " + CleanFiles.mbSaved + " MB");
-
-        CleanFiles.filesDeleted = 0;
-        CleanFiles.mbSaved = 0;
+        String s = cleanFiles.getFileDeletedCount() == 1 ? "" : "s";
+        sender.sendMessage(ChatColor.DARK_GREEN + "[FileCleaner] Done! " + cleanFiles.getFileDeletedCount() + " file" + s + " deleted, saving " + cleanFiles.getMbSaved() + " MB");
     }
 }

@@ -3,6 +3,8 @@
 package net.silverstonemc.filecleaner;
 
 import java.io.File;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.*;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -10,8 +12,8 @@ import java.util.regex.PatternSyntaxException;
 import java.util.stream.Collectors;
 
 public class CleanFiles {
-    public static int filesDeleted;
-    public static double mbSaved;
+    private int fileDeletedCount;
+    private long bytesSaved;
 
     @SuppressWarnings("MethodWithTooManyParameters")
     public void scanFilesInDir(String folderName, Object logger, int age, int count, long size, List<String> excludedFiles) {
@@ -132,8 +134,8 @@ public class CleanFiles {
 
         if (file.delete()) {
             log(logger, "Successfully deleted file \"" + file.getPath() + "\"", LogLevel.INFO);
-            filesDeleted++;
-            mbSaved += Math.round((fileSize / (1024.0 * 1024.0)) * 100.0) / 100.0;
+            fileDeletedCount++;
+            bytesSaved += fileSize;
 
         } else log(
             logger,
@@ -158,5 +160,19 @@ public class CleanFiles {
             case INFO -> newLogger.info(message);
             case SEVERE -> newLogger.error(message);
         }
+    }
+
+    public int getFileDeletedCount() {
+        return fileDeletedCount;
+    }
+
+    public double getMbSaved() {
+        // 1048576 is 1024 * 1024: bytes -> kb -> mb
+        BigDecimal megabytes = BigDecimal.valueOf(bytesSaved).divide(
+            BigDecimal.valueOf(1048576L),
+            2,
+            RoundingMode.HALF_UP);
+
+        return megabytes.doubleValue();
     }
 }
